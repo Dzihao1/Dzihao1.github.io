@@ -37,18 +37,6 @@
       </tags>
   </entry>
   <entry>
-    <title>第一篇文章</title>
-    <url>/2022/02/13/FirstTest/</url>
-    <content><![CDATA[<h1 id="主动进步的一天"><a href="#主动进步的一天" class="headerlink" title="主动进步的一天"></a>主动进步的一天</h1><p>在Yearito的博客的指导下,终于搭建好了Hexo博客.<br>2022&#x2F;2&#x2F;13从这一天开始进步,从这一天开始不再害怕困难.</p>
-]]></content>
-      <categories>
-        <category>日志</category>
-      </categories>
-      <tags>
-        <tag>出生日</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Depth_First Search</title>
     <url>/2022/02/14/Depth-First-Search/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>深度优先遍历(Depth First Search, 简称 DFS) 与广度优先遍历(Breath First Search)是图论中两种非常重要的算法,生产上广泛用于拓扑排序,寻路(走迷宫),搜索引擎,爬虫等,也频繁出现在 leetcode,高频面试题中。</p>
@@ -103,6 +91,36 @@
       </tags>
   </entry>
   <entry>
+    <title>什么是pytorch</title>
+    <url>/2022/02/23/pytorch-1/</url>
+    <content><![CDATA[<h1 id="什么是pytorch"><a href="#什么是pytorch" class="headerlink" title="什么是pytorch"></a>什么是pytorch</h1><p><img src="https://img-blog.csdnimg.cn/5d5809b77a4e4fd2b48fad69c1747f08.png#pic_center" alt="在这里插入图片描述"></p>
+<p>PyTorch是一个提供两个高级功能的python包：<br>具有强GPU加速度的张量计算,如numpy.<br>深层神经网络建立在基于磁带的自动调整系统上<br>您可以重用您最喜爱的python软件包,如numpy，scipy和Cython，以便在需要时扩展PyTorch。</p>
+<h2 id="PyTorch在细粒度级别是由以下组件组成的库"><a href="#PyTorch在细粒度级别是由以下组件组成的库" class="headerlink" title="PyTorch在细粒度级别是由以下组件组成的库,"></a>PyTorch在细粒度级别是由以下组件组成的库,</h2><p>包 描述<br>torch 像NumPy这样的Tensor图书馆,拥有强大的GPU支持<br>torch.autograd 一种基于磁带的自动分类库，支持所有可区分的Tensor操作手电筒<br>torch.nn 一个神经网络库与autograd设计了最大的灵活性torch.optim 一种与torch.nn一起使用的优化包,具有标准优化方法,如SGD，RMSProp,LBFGS，Adam等。<br>torch.multiprocessing python多处理,但是具有魔法内存共享的手电筒传感器跨过程。适用于数据加载和hogwild培训。torch.utils DataLoader,Trainer等实用功能为方便起见<br>torch.legacy,.nn &#x2F; .optim, 由于向后兼容性原因,已经从割炬移植的旧代码<br>通常使用PyTorch可以:<br>使用GPU的功能代替numpy。 一个深刻的学习研究平台,提供最大的灵活性和速度<br>进一步阐述:</p>
+<h2 id="GPU准备好的Tensor库"><a href="#GPU准备好的Tensor库" class="headerlink" title="GPU准备好的Tensor库"></a>GPU准备好的Tensor库</h2><p>如果你使用numpy,那么你已经使用了Tensors(aka ndarray)。 GPU准备好的Tensor库<br><img src="https://img-blog.csdnimg.cn/fddbce9cb1b74a6db660ed061a085faf.png" alt="在这里插入图片描述"></p>
+<p>PyTorch提供可以在CPU或GPU上生活的Tensors,并加速计算量。</p>
+<p>我们提供各种各样的张量程序,以加速和适应您的科学计算需求,如切片,索引,数学运算,线性代数,缩减。他们快!</p>
+<p>动态神经网络,基于磁带的自动格式<br>PyTorch具有构建神经网络的独特方式,使用和重放磁带录音机。</p>
+<p>大多数框架,比如请输入代码TensorFlow,Theano,Caffe和CNTK拥有世界的静态视图。必须建立一个神经网络,并重复使用相同的结构。改变网络的行为方式意味着必须从头开始。</p>
+<p>使用PyTorch，我们使用一种称为反向模式自动分化的技术,它允许您以零延迟或开销改变网络的任意运行方式。我们的灵感来自于在这个题目的几个研究论文,以及当前和过去的工作,如 autograd, autograd, Chainer等。</p>
+<p>虽然这种技术并不是PyTorch所特有的,但它是迄今为止最快的实现之一。您可以为您的疯狂研究获得最佳的速度和灵活性。<br><img src="https://img-blog.csdnimg.cn/d923190d90d64d0389dbcc34ba2d7f42.gif#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="Python第一"><a href="#Python第一" class="headerlink" title="Python第一"></a>Python第一</h2><p>PyTorch不是一个Python绑定到一个单一的C ++框架。它被构建为深入整合到Python中。您可以自然地使用它，就像您将使用numpy &#x2F; scipy &#x2F; scikit学习等。您可以使用自己喜欢的库并使用Cython和Numba等软件包，在Python本身编写新的神经网络层。我们的目标是不要在适当的时候重塑轮子。</p>
+<h2 id="势在必得的经验"><a href="#势在必得的经验" class="headerlink" title="势在必得的经验"></a>势在必得的经验</h2><p>PyTorch的设计是直观的，线性的思想和易于使用。当您执行一行代码时,它将被执行。没有一个异步的世界观。当您进入调试器或接收错误消息和堆栈跟踪时,理解它们是直接的。堆栈跟踪正好指向您的代码定义的位置。我们希望您不要花费几个小时来调试代码,因为堆栈跟踪错误或异步和不透明的执行引擎。</p>
+<h2 id="快速和精益"><a href="#快速和精益" class="headerlink" title="快速和精益"></a>快速和精益</h2><p>PyTorch具有最小的框架开销。我们集成加速库,如英特尔MKL和NVIDIA(CuDNN,NCCL)以最大限度地提高速度。核心是CPU和GPU Tensor和神经网络后端(TH,THC,THNN,THCUNN)都是用C99 API写成独立的库。 它们已经成熟,并已经过多年的测试。</p>
+<p>因此,PyTorch相当快 - 无论您是运行小型或大型神经网络。</p>
+<p>PyTorch的内存使用率与Torch或其他一些替代品相比非常有效。我们为GPU编写了自定义内存分配器,以确保您的深入学习模型具有最大的内存效率。这使您能够训练比以前更大的深入学习模型。</p>
+<h2 id="扩展没有痛苦"><a href="#扩展没有痛苦" class="headerlink" title="扩展没有痛苦"></a>扩展没有痛苦</h2><p>编写新的神经网络模块,或与PyTorch的Tensor API进行接口的设计是简单而且抽象最少的。</p>
+<p>您可以使用torch API 或您喜欢的基于numpy的库（如SciPy,在Python中编写新的神经网络层</p>
+<p>如果你想用C &#x2F; C ++图层，我们根据一个扩展API CFFI是有效的，并以最小的样板。 没有需要编写的包装器代码</p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>pytorch了解大概就这么多了,如果需要详细了解,可以去官方查看文档学习,谢谢大家的阅读。</p>
+]]></content>
+      <categories>
+        <category>深度学习 神经网络 pytorch</category>
+      </categories>
+      <tags>
+        <tag>深度学习 神经网络 pytorch</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2022/02/11/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -128,6 +146,415 @@
       </categories>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第一篇文章</title>
+    <url>/2022/02/13/FirstTest/</url>
+    <content><![CDATA[<h1 id="主动进步的一天"><a href="#主动进步的一天" class="headerlink" title="主动进步的一天"></a>主动进步的一天</h1><p>在Yearito的博客的指导下,终于搭建好了Hexo博客.<br>2022&#x2F;2&#x2F;13从这一天开始进步,从这一天开始不再害怕困难.</p>
+]]></content>
+      <categories>
+        <category>日志</category>
+      </categories>
+      <tags>
+        <tag>出生日</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>什么是Numpy</title>
+    <url>/2022/02/23/pytorch-2/</url>
+    <content><![CDATA[<h1 id="什么是NumPy"><a href="#什么是NumPy" class="headerlink" title="什么是NumPy?"></a>什么是NumPy?</h1><p>NumPy是Python中科学计算的基础包。它是一个Python库，提供多维数组对象，各种派生对象（如掩码数组和矩阵），以及用于数组快速操作的各种例程，包括数学，逻辑，形状操作，排序，选择，I &#x2F; O离散傅立叶变换，基本线性代数，基本统计运算，随机模拟等等。</p>
+<p>NumPy包的核心是ndarray对象。这封装了同构数据类型的n维数组，许多操作在编译代码中执行以提高性能。NumPy数组和标准Python序列之间有几个重要的区别：</p>
+<p>NumPy数组在创建时具有固定大小，与Python列表（可以动态增长）不同。更改ndarray的大小将创建一个新数组并删除原始数组。<br>NumPy数组中的元素都需要具有相同的数据类型，因此在内存中的大小相同。例外：可以有（Python，包括NumPy）对象的数组，从而允许不同大小的元素的数组。<br>NumPy数组有助于对大量数据进行高级数学和其他类型的操作。通常，与使用Python的内置序列相比，这些操作的执行效率更高，代码更少。<br>越来越多的基于Python的科学和数学软件包正在使用NumPy数组; 虽然这些通常支持Python序列输入，但它们在处理之前将这些输入转换为NumPy数组，并且它们通常输出NumPy数组。换句话说，为了有效地使用当今大量（甚至大多数）基于Python的科学&#x2F;数学软件，只知道如何使用Python的内置序列类型是不够的 - 还需要知道如何使用NumPy数组。<br>关于序列大小和速度的要点在科学计算中尤为重要。作为一个简单的例子，考虑将1-D序列中的每个元素与相同长度的另一个序列中的相应元素相乘的情况。如果数据被存储在两个Python列表，a并且b，我们可以遍历每个元素：</p>
+<p>c &#x3D; []<br>for i in range(len(a)):<br>    c.append(a[i]*b[i])<br>这产生了正确的答案，但如果a且b每个包含数百万个数字，我们将为Python中循环的低效率付出代价。我们可以通过写入在C中更快地完成相同的任务（为了清楚起见，我们忽略了变量声明和初始化，内存分配等）<br>for  （i  &#x3D;  0 ;  i  &lt;  rows ;  i ++ ）： {<br>  c [ i ]  &#x3D;  a [ i ] * b [ i ];<br>}<br>这节省了解释Python代码和操作Python对象所涉及的所有开销，但代价是从Python编码中获得的好处。此外，所需的编码工作随着我们数据的维度而增加。例如，在二维数组的情况下，C代码（如前所述）扩展为<br>for (i &#x3D; 0; i &lt; rows; i++): {<br>  for (j &#x3D; 0; j &lt; columns; j++): {<br>    c[i][j] &#x3D; a[i][j]*b[i][j];<br>  }<br>}<br>NumPy为我们提供了两全其美：当涉及到ndarray时，逐个元素的操作是“默认模式” ，但逐个元素的操作由预编译的C代码快速执行。在NumPy</p>
+<p>c  &#x3D;  a  *  b<br>以近C速度执行前面的示例所做的事情，但是我们期望基于Python的代码具有简单性。的确，NumPy成语更简单！最后一个例子说明了NumPy的两个特征，它们是它的大部分功能的基础：矢量化和广播。</p>
+<p>Vectorization描述了代码中没有任何显式循环，索引等 - 这些事情当然只是在优化的，预编译的C代码中“幕后”。矢量化代码有许多优点，其中包括：</p>
+<p>矢量化代码更简洁，更易于阅读<br>更少的代码行通常意味着更少的错误<br>代码更接近于标准的数学符号（通常，更容易，正确编码数学结构）<br>矢量化导致更多“Pythonic”代码。如果没有矢量化，我们的代码就会被低效且难以阅读的for循环所困扰。<br>广播是用于描述操作的隐式逐元素行为的术语; 一般来说，在NumPy中，所有操作，不仅仅是算术运算，而是逻辑，位，功能等，都以这种隐式的逐元素方式表现，即它们进行广播。此外，在上面的例子中，a并且b可以是相同形状的多维阵列，或者标量和阵列，或者甚至是具有不同形状的两个阵列，条件是较小的阵列可以“扩展”到更大的形状。结果广播明确无误的方式。有关广播的详细“规则”，请参阅<a href="https://numpy.org/doc/stable/user/whatisnumpy.html">numpy.doc.broadcasting</a>。</p>
+<p>NumPy完全支持面向对象的方法，再次使用ndarray开始。例如，ndarray是一个类，拥有许多方法和属性。它的许多方法都在最外层的NumPy命名空间中镜像函数，使程序员可以完全自由地编写她喜欢的范例和&#x2F;或最适合手头任务的范例。</p>
+<p>ndarray数组的切片和索引<br>基础索引</p>
+<h1 id="一维数组切片和索引"><a href="#一维数组切片和索引" class="headerlink" title="一维数组切片和索引"></a>一维数组切片和索引</h1><p>和Python的List一样<br>ndarray 数组可以基于0 - n 的下标进行索引，并设置start, stop 及step 参数进行，从原数组中切割出一个新数组。</p>
+<p>注意：切片的修改会修改原来的数组<br>原因：Numpy经常要处理大数组，避免每次都复制</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">a = np.arange(8)</span><br><span class="line">print(a[0])     # 输出 0</span><br><span class="line">print(a[-1])    # 输出 7</span><br><span class="line">print(a[1:6:2]) # 输出 [1 3 5]</span><br><span class="line">print(a[:])     # 输出 [0 1 2 3 4 5 6 7]</span><br><span class="line">print(a[::-1])  # 输出 [7 6 5 4 3 2 1 0]</span><br></pre></td></tr></table></figure>
+<h1 id="二维数组切片和索引"><a href="#二维数组切片和索引" class="headerlink" title="二维数组切片和索引"></a>二维数组切片和索引</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 二维向量，一般用大写字母</span><br><span class="line">X  = np.arange(20).reshape(4,5)</span><br><span class="line"># 分别用行坐标、列坐标，实现行列筛选</span><br><span class="line"># X[0][0]</span><br><span class="line">X[0, 0]  </span><br><span class="line">X[-1, 2] </span><br><span class="line"># 可以省略后续索引值，返回的数据是降低一个维度的数组</span><br><span class="line"># 这里的2，其实是要筛选第2行</span><br><span class="line">X[2]</span><br><span class="line"># 筛选-1对应的行</span><br><span class="line">X[-1]</span><br><span class="line"># 筛选多行</span><br><span class="line">X[:-1]</span><br><span class="line"># 筛选多行，然后筛选多列</span><br><span class="line">X[:2, 2:4]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">a = np.arange(1,10).reshape(3,3) # [[1 2 3] [4 5 6] [7 8 9]]</span><br><span class="line">print(a[2])         # 获取第三行 输出：[ 7 8 9]</span><br><span class="line">print(a[1][2])      # 获取第二行 第三列 输出：6</span><br><span class="line">print(a[1,2])       # 获取第二行 第三列 输出：6</span><br><span class="line">print(a[:,1])       # 获取所有行 第2列  输出：[2 5 8]</span><br><span class="line">print(a[::2,:])     # 获取奇数行，所有列 输出: [[1 2 3] [7 8 9]]</span><br><span class="line">print(a[::-1,::-1]) # 行列倒序 输出: [[9 8 7] [6 5 4] [3 2 1]]</span><br></pre></td></tr></table></figure>
+<h1 id="布尔索引"><a href="#布尔索引" class="headerlink" title="布尔索引"></a>布尔索引</h1><h2 id="一维数组的布尔索引"><a href="#一维数组的布尔索引" class="headerlink" title="一维数组的布尔索引"></a>一维数组的布尔索引</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">a = np.arange(1,10)</span><br><span class="line">b = a &gt; 5</span><br><span class="line">print(b)    # 输出: [False False False False False  True  True  True  True]</span><br><span class="line">print(a[b]) # 输出: [6 7 8 9]</span><br><span class="line">a[a&lt;=5] = 0</span><br><span class="line">a[a&gt;5] += 100</span><br><span class="line">print(a)    # 输出: [0 0 0 0 0 106 107 108 109]</span><br></pre></td></tr></table></figure>
+<h2 id="二维数组的布尔索引"><a href="#二维数组的布尔索引" class="headerlink" title="二维数组的布尔索引"></a>二维数组的布尔索引</h2><p>把特征满足某些条件的数据(行)筛选出来</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 举例：怎样把第3列大于5的行筛选出来</span><br><span class="line">X[:, 3]</span><br><span class="line"># 这里是按照行进行的筛选</span><br><span class="line">X[X[:, 3]&gt;5]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">a = np.arange(1,7).reshape(2,3)</span><br><span class="line"># a[:,1]筛选出所有行第二列</span><br><span class="line">a[:,1][a[:,1]&gt;3] +=100 # 所有行，第二列＞3的值＋100</span><br><span class="line">print(a)    # 输出: [[  1   2   3] [4 105 6]]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="神奇索引"><a href="#神奇索引" class="headerlink" title="神奇索引"></a>神奇索引</h1><p>使用整数数组进行数据索引。<br>与切片不同，花式索引返回的是对象的一个复制而不是引用</p>
+<h2 id="一维数组的神奇索引"><a href="#一维数组的神奇索引" class="headerlink" title="一维数组的神奇索引"></a>一维数组的神奇索引</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">a = np.arange(7)</span><br><span class="line">print(a[[1,3,5]])  # 输出：[1 3 5]</span><br></pre></td></tr></table></figure>
+<h2 id="二维数组的神奇索引"><a href="#二维数组的神奇索引" class="headerlink" title="二维数组的神奇索引"></a>二维数组的神奇索引</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">a = np.arange(1,7).reshape(2,3)</span><br><span class="line">print(a)               # 输出：[[1 2 3] [4 5 6]]</span><br><span class="line">print(a[[0,1],[0,2]])  # 0行0列和1行2列对应的元素 输出：[1,6]</span><br><span class="line">print(a[:,[0,2]])  # 输出：[[1 3] [4 6]]</span><br></pre></td></tr></table></figure>
+<h1 id="ndarray对象的运算"><a href="#ndarray对象的运算" class="headerlink" title="ndarray对象的运算"></a>ndarray对象的运算</h1><h2 id="ndarray对象的算术运算"><a href="#ndarray对象的算术运算" class="headerlink" title="ndarray对象的算术运算"></a>ndarray对象的算术运算</h2><p>加减乘除，代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">a = np.arange(1,10).reshape(3,3) # [[1 2 3] [4 5 6] [7 8 9]]</span><br><span class="line">b = np.array([1,1,1])</span><br><span class="line">c = a + b       # 广播</span><br><span class="line">d = np.add(a,b) # add(),subtract(),multiply(),divide()</span><br><span class="line">print(c)        # 输出[[ 2  3  4] [ 5  6  7] [ 8  9 10]]</span><br><span class="line">print(d)        # 输出[[ 2  3  4] [ 5  6  7] [ 8  9 10]]</span><br></pre></td></tr></table></figure>
+<h2 id="ndarray对象的数学函数"><a href="#ndarray对象的数学函数" class="headerlink" title="ndarray对象的数学函数"></a>ndarray对象的数学函数</h2><table>
+<thead>
+<tr>
+<th>数学运算函数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>np.abs &#x2F;fabs</td>
+<td>绝对值</td>
+</tr>
+<tr>
+<td>np.add(x1，x2 )</td>
+<td>按元素添加参数，等效于 x1 + x2</td>
+</tr>
+<tr>
+<td>np.subtract(x1，x2)</td>
+<td>按元素方式减去参数，等效于x1 - x2</td>
+</tr>
+<tr>
+<td>np.multiply(x1，x2)</td>
+<td>逐元素乘法参数，等效于x1 * x2</td>
+</tr>
+<tr>
+<td>np.divide(x1，x2)</td>
+<td>逐元素除以参数，等效于x1 &#x2F; x2</td>
+</tr>
+<tr>
+<td>np.exp(x)</td>
+<td>计算e的x次方。</td>
+</tr>
+<tr>
+<td>np.exp2(x)</td>
+<td>计算2的x次方。</td>
+</tr>
+<tr>
+<td>np.power(x1,x2)</td>
+<td>计算x1的x2次幂。</td>
+</tr>
+<tr>
+<td>np.mod(x)</td>
+<td>返回输入数组中相应元素的除法余数.</td>
+</tr>
+<tr>
+<td>np.log(x)</td>
+<td>自然对数，逐元素。</td>
+</tr>
+<tr>
+<td>np.log2(x)</td>
+<td>x的基础2对数。</td>
+</tr>
+<tr>
+<td>np.log10(x)</td>
+<td>以元素为单位返回输入数组的基数10的对数。</td>
+</tr>
+<tr>
+<td>np.expm1(x)</td>
+<td>对数组中的所有元素计算exp（x） - 1</td>
+</tr>
+<tr>
+<td>np.log1p(x)</td>
+<td>返回一个加自然对数的输入数组。</td>
+</tr>
+<tr>
+<td>np.sqrt(x)</td>
+<td>按元素方式返回数组的正平方根。</td>
+</tr>
+<tr>
+<td>np.square(x)</td>
+<td>返回输入的元素平方。</td>
+</tr>
+<tr>
+<td>np.sin(x)</td>
+<td>三角正弦。</td>
+</tr>
+<tr>
+<td>np.cos(x)</td>
+<td>元素余弦。</td>
+</tr>
+<tr>
+<td>np.tan(x)</td>
+<td>逐元素计算切线。</td>
+</tr>
+<tr>
+<td>np.round(x)</td>
+<td>四舍五入</td>
+</tr>
+<tr>
+<td>np.floor(x)</td>
+<td>向下取整</td>
+</tr>
+<tr>
+<td>np.ceil(x)</td>
+<td>向上取整</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">a = np.arange(1,6)</span><br><span class="line">print(a)            # 输出: [1 2 3 4 5]</span><br><span class="line">print(np.abs(a))    # 输出: [1 2 3 4 5]</span><br><span class="line">print(np.sqrt(a))   # 输出: [1. 1.41421356 1.73205081 2. 2.23606798]</span><br><span class="line">print(np.power(a, 3))    # 输出: [  1   8  27  64 125]</span><br><span class="line">print(np.exp(a)) # 输出: [  2.71828183   7.3890561   20.08553692  54.59815003 148.4131591 ]</span><br><span class="line">print(np.log(a)) # 以e为底 输出: [0.         0.69314718 1.09861229 1.38629436 1.60943791]</span><br></pre></td></tr></table></figure>
+<h2 id="ndarray对象的取整函数"><a href="#ndarray对象的取整函数" class="headerlink" title="ndarray对象的取整函数"></a>ndarray对象的取整函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">np.random.seed(123)</span><br><span class="line">arr = np.random.randn(8)</span><br><span class="line"># np.round 与 np.around 相同</span><br><span class="line">arr_a = np.around(arr, 2) # 四舍五入</span><br><span class="line">arr_f = np.floor(arr)     # 向下取整</span><br><span class="line">arr_c = np.ceil(arr)      # 向上取整</span><br><span class="line">arr_a</span><br><span class="line">arr_f</span><br><span class="line">arr_c</span><br></pre></td></tr></table></figure>
+<h2 id="ndarray对象的统计函数"><a href="#ndarray对象的统计函数" class="headerlink" title="ndarray对象的统计函数"></a>ndarray对象的统计函数</h2><table>
+<thead>
+<tr>
+<th>函数名称</th>
+<th>NaN安全版本</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>函数名称</td>
+<td>NaN安全版本</td>
+<td>描述</td>
+</tr>
+<tr>
+<td>np.sum()</td>
+<td>np.nansum()</td>
+<td>计算元素的和</td>
+</tr>
+<tr>
+<td>np.min()</td>
+<td>np.nanmin()</td>
+<td>找出最小值</td>
+</tr>
+<tr>
+<td>np.max()</td>
+<td>np.nanmax()</td>
+<td>找出最大值</td>
+</tr>
+<tr>
+<td>np.prod()</td>
+<td>np.nanprod()</td>
+<td>计算元素的积</td>
+</tr>
+<tr>
+<td>np.ptp()</td>
+<td>N&#x2F;A    计算元素的极差</td>
+<td>（最大值 - 最小值）</td>
+</tr>
+<tr>
+<td>np.mean()</td>
+<td>np.nanmean()</td>
+<td>计算元素的算术平均值</td>
+</tr>
+<tr>
+<td>np.std()</td>
+<td>np.nanstd()</td>
+<td>计算标准差</td>
+</tr>
+<tr>
+<td>np.var()</td>
+<td>np.nanvar()</td>
+<td>计算方差</td>
+</tr>
+<tr>
+<td>np.percentile()</td>
+<td>np.nanpercentile()</td>
+<td>计算百分位数</td>
+</tr>
+<tr>
+<td>np.median()</td>
+<td>np.nanmedian()</td>
+<td>计算中位数</td>
+</tr>
+<tr>
+<td>np.average()</td>
+<td>N&#x2F;A</td>
+<td>返回数组的加权平均值</td>
+</tr>
+<tr>
+<td>np.any()</td>
+<td>N&#x2F;A</td>
+<td>验证任何一个元素是否为真</td>
+</tr>
+<tr>
+<td>np.all()</td>
+<td>N&#x2F;A</td>
+<td>验证所有元素是否为真</td>
+</tr>
+<tr>
+<td>关于NaN安全版本的说明：数组出现NaN空值将影响最终结果输出，如果不希望空值带入计算，则可使用NaN安全版本</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>方法</td>
+<td>说明</td>
+<td></td>
+</tr>
+<tr>
+<td>——–</td>
+<td>—–</td>
+<td></td>
+</tr>
+<tr>
+<td>np.argmin( )</td>
+<td>最小值的索引</td>
+<td></td>
+</tr>
+<tr>
+<td>np.argmax( )</td>
+<td>最大值的索引</td>
+<td></td>
+</tr>
+<tr>
+<td>np.average( )</td>
+<td>加权平均</td>
+<td></td>
+</tr>
+<tr>
+<td>代码如下：</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a = np.array([[3,7,5],[8,4,3],[2,4,9]])</span><br><span class="line">np.min(a)                  # 所有元素中最小的元素</span><br><span class="line">np.min(a, axis = 0)        # 每一列中最小的元素 </span><br><span class="line">np.max(a, axis = 1)        # 每一行中最大的元素 </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">a = np.arange(1,6)</span><br><span class="line">print(a)            # 输出: [1 2 3 4 5]</span><br><span class="line">print(np.sum(a))    # 输出: 15</span><br><span class="line">print(np.mean(a))   # 输出: 3.0</span><br><span class="line">print(np.std(a))    # 输出: 1.4142135623730951</span><br><span class="line">print(np.var(a))    # 输出: 2.0</span><br><span class="line">print(np.median(a)) # 输出: 3.0</span><br><span class="line">print(np.min(a))    # 输出: 1</span><br><span class="line">print(np.max(a))    # 输出: 5</span><br><span class="line">print(np.average(a,weights=np.ones(5))) # 输出: 3.0</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">arr = np.arange(12).reshape(3,4)</span><br><span class="line">np.percentile(arr, [25, 50, 75])</span><br><span class="line">np.quantile(arr, [0.25, 0.5, 0.75])</span><br></pre></td></tr></table></figure>
+<h2 id="ndarray对象的排序和索引函数"><a href="#ndarray对象的排序和索引函数" class="headerlink" title="ndarray对象的排序和索引函数"></a>ndarray对象的排序和索引函数</h2><h3 id="np-sort"><a href="#np-sort" class="headerlink" title="np.sort"></a>np.sort</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">np.random.seed(123)</span><br><span class="line">arr = np.random.randint(1,30,9)</span><br><span class="line">arr_a = np.sort(arr)  # 也可在不同维度上进行索引</span><br></pre></td></tr></table></figure>
+<h3 id="np-argsort"><a href="#np-argsort" class="headerlink" title="np.argsort"></a>np.argsort</h3><p>argsort返回从小到大的排列在数组中的索引位置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#电影名称</span><br><span class="line">mv_name=[&#x27;肖申克的救赎&#x27;,&#x27;控方证人&#x27;,&#x27;美丽人生&#x27;,&#x27;阿甘正传&#x27;,&#x27;霸王别姬&#x27;,&#x27;泰坦尼克号&#x27;,&#x27;辛德勒的名单&#x27;,&#x27;这个杀手不太冷&#x27;,&#x27;疯狂动物成&#x27;,&#x27;海豚湾&#x27;]</span><br><span class="line">#评分人数</span><br><span class="line">mv_num=np.array([692795,42995,327855,580897,478523,157074,306904,662552,284652,159302])</span><br><span class="line">order=np.argsort(mv_num)</span><br><span class="line">mv_name[order[0]] # 获取评分人数最少的电影名称</span><br></pre></td></tr></table></figure>
+<h3 id="np-nonzero"><a href="#np-nonzero" class="headerlink" title="np.nonzero"></a>np.nonzero</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">arr = np.array([0,2,3,0,7,0])</span><br><span class="line">np.nonzero(arr)  # 返回的是非零元素在原数组中的位置</span><br><span class="line">arr[np.nonzero(arr)]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="np-where"><a href="#np-where" class="headerlink" title="np.where"></a>np.where</h3><p>where函数会返回所有非零元素(满足条件)的索引</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">np.random.seed(123)</span><br><span class="line">arr = np.random.randint(1,30,9)</span><br><span class="line">arr2 = np.random.randint(6,20,9)</span><br><span class="line">arr</span><br><span class="line">arr2</span><br><span class="line">np.where(arr&gt;5) # 返回的是位置信息</span><br><span class="line">arr[np.where(arr&gt;5)]</span><br><span class="line">arr[arr&gt;5]  # 与 arr[np.where(arr&gt;5)] 等价</span><br><span class="line">np.where(arr&gt;arr2,arr,arr2)</span><br></pre></td></tr></table></figure>
+<p>ndarray对象的唯一化和集合运算</p>
+<figure class="highlight plaintext"><figcaption><span>唯一化</span></figcaption><table><tr><td class="code"><pre><span class="line">np.random.seed(123)</span><br><span class="line">arr = np.random.randint(1,30,9)</span><br><span class="line">np.unique(arr)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">arr = np.random.randint(1,30,9)</span><br><span class="line">arr2 = np.random.randint(6,20,9)</span><br><span class="line">np.in1d(arr, arr2) # 判断元素是否在数组中</span><br><span class="line">np.intersect1d(arr, arr2) # 求交集</span><br><span class="line">np.union1d(arr, arr2) # 求并集</span><br><span class="line">np.setdiff1d(arr, arr2) # 求差集</span><br></pre></td></tr></table></figure>
+<h2 id="ndarray对象的矢量化-向量化-运算"><a href="#ndarray对象的矢量化-向量化-运算" class="headerlink" title="ndarray对象的矢量化(向量化)运算"></a>ndarray对象的矢量化(向量化)运算</h2><p>数组表达式替换显式循环的做法通常称为向量化。<br>矢量化代码有很多优点，其中包括：<br>1、矢量化代码更简洁易读<br>2、更少的代码行通常意味着更少的错误<br>3、执行效率高，运行速度快</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">arr1 = np.array([1,2,3])</span><br><span class="line">arr2 = np.array([4,5,6])</span><br><span class="line">print(arr1+arr2) # 输出: [5,7,9]</span><br></pre></td></tr></table></figure>
+<h1 id="Numpy的广播功能"><a href="#Numpy的广播功能" class="headerlink" title="Numpy的广播功能"></a>Numpy的广播功能</h1><p>1、如果数组不具有相同的秩，则将较低等级数组的形状维度添加1，直到两个形状具有相同的大小。即如果运算双方都是数组，而且数组的形状不一致，那么，两个数组各自向一个广播，广播后的两个数组形状相同，则广播可行。<br>2、其中一个数组的维度大小和元素个数为1，相当于对单个标量进行广播。即如果运算的双方一方是数组，一方是标量(单个的数值)，不受广播方向约束，标量可以向两个方向广播。<br>3、在一个数组的大小为1且另一个数组的大小大于1的任何维度中，第一个数组的行为就像沿着该维度复制一样。即如果运算的双方都是数组，而且数组的形状不一致，那么，一个数组向一个方向广播之后可以得到和另一个数组一样的形状，则广播可行。<br><img src="https://img-blog.csdnimg.cn/70069a5c40ed420e8ac6b2c30bfd8465.png" alt="在这里插入图片描述"></p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>Numpy的语法非常多非常灵活，想要全部记住并且灵活使用需要花费一定的时间，在学习Numpy也需要动手代码实现。非常感谢大家的阅读。</p>
+]]></content>
+      <categories>
+        <category>深度学习 神经网络 Numpy</category>
+      </categories>
+      <tags>
+        <tag>深度学习 神经网络 Numpy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>反向传播back propagation</title>
+    <url>/2022/02/23/pytorch-5/</url>
+    <content><![CDATA[<h1 id="反向传播back-propagation"><a href="#反向传播back-propagation" class="headerlink" title="反向传播back propagation"></a>反向传播back propagation</h1><p>B站 刘二大人的PyTroch 深度学习实践——反向传播</p>
+<p> 代码说明：</p>
+<p>1、w是Tensor(张量类型)，Tensor中包含data和grad，data和grad也是Tensor。grad初始为None，调用l.backward()方法后w.grad为Tensor，故更新w.data时需使用w.grad.data。如果w需要计算梯度，那构建的计算图中，跟w相关的tensor都默认需要计算梯度。</p>
+<p>刘老师视频中a &#x3D; torch.Tensor([1.0]) 本文中更改为 a &#x3D; torch.tensor([1.0])。两种方法都可以，个人习惯第二种。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import torch</span><br><span class="line">a = torch.tensor([1.0])</span><br><span class="line">a.requires_grad = True # 或者 a.requires_grad_()</span><br><span class="line">print(a)</span><br><span class="line">print(a.data)</span><br><span class="line">print(a.type())             # a的类型是tensor</span><br><span class="line">print(a.data.type())        # a.data的类型是tensor</span><br><span class="line">print(a.grad)</span><br><span class="line">print(type(a.grad))</span><br></pre></td></tr></table></figure>
+<p>结果为：<br><img src="https://img-blog.csdnimg.cn/220b558edf9042ba8734847d2026fca1.png" alt="在这里插入图片描述"><br>2、w是Tensor， forward函数的返回值也是Tensor，loss函数的返回值也是Tensor</p>
+<p>3、本算法中反向传播主要体现在，l.backward()。调用该方法后w.grad由None更新为Tensor类型，且w.grad.data的值用于后续w.data的更新。<br> l.backward()会把计算图中所有需要梯度(grad)的地方都会求出来，然后把梯度都存在对应的待求的参数中，最终计算图被释放。<br>取tensor中的data是不会构建计算图的。<br>   <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import torch</span><br><span class="line">x_data = [1.0, 2.0, 3.0]</span><br><span class="line">y_data = [2.0, 4.0, 6.0]</span><br><span class="line"> </span><br><span class="line">w = torch.tensor([1.0]) # w的初值为1.0</span><br><span class="line">w.requires_grad = True # 需要计算梯度</span><br><span class="line"> </span><br><span class="line">def forward(x):</span><br><span class="line">    return x*w  # w是一个Tensor</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">def loss(x, y):</span><br><span class="line">    y_pred = forward(x)</span><br><span class="line">    return (y_pred - y)**2</span><br><span class="line"> </span><br><span class="line">print(&quot;predict (before training)&quot;, 4, forward(4).item())</span><br><span class="line"> </span><br><span class="line">for epoch in range(100):</span><br><span class="line">    for x, y in zip(x_data, y_data):</span><br><span class="line">        l =loss(x,y) # l是一个张量，tensor主要是在建立计算图 forward, compute the loss</span><br><span class="line">        l.backward() #  backward,compute grad for Tensor whose requires_grad set to True</span><br><span class="line">        print(&#x27;\tgrad:&#x27;, x, y, w.grad.item())</span><br><span class="line">        w.data = w.data - 0.01 * w.grad.data   # 权重更新时，注意grad也是一个tensor</span><br><span class="line"> </span><br><span class="line">        w.grad.data.zero_() # after update, remember set the grad to zero</span><br><span class="line"> </span><br><span class="line">    print(&#x27;progress:&#x27;, epoch, l.item()) # 取出loss使用l.item，不要直接使用l（l是tensor会构建计算图）</span><br><span class="line"> </span><br><span class="line">print(&quot;predict (after training)&quot;, 4, forward(4).item())</span><br></pre></td></tr></table></figure></p>
+<h1 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h1><p>课程中留的三个作业<br>1、手动推导线性模型y&#x3D;w<em>x，损失函数loss&#x3D;(ŷ-y)²下，当数据集x&#x3D;2,y&#x3D;4的时候，反向传播的过程。<br>答：<br><img src="https://img-blog.csdnimg.cn/05806f6ee85c46b888ca3a708cf3edad.png" alt="在这里插入图片描述"><br>2、手动推导线性模型 y&#x3D;w</em>x+b，损失函数loss&#x3D;(ŷ-y)²下，当数据集x&#x3D;1,y&#x3D;2的时候，反向传播的过程。</p>
+<p>答：<br><img src="https://img-blog.csdnimg.cn/fc2f4e77713e4da084d6c0415786729d.png" alt="在这里插入图片描述"><br>3、画出二次模型y&#x3D;w1x²+w2x+b，损失函数loss&#x3D;(ŷ-y)²的计算图，并且手动推导反向传播的过程，最后用pytorch的代码实现。</p>
+<p>答：<br>构建和推导的过程<br><img src="https://img-blog.csdnimg.cn/cc9478d3dc524f3fa44d9b4096309222.png" alt="在这里插入图片描述"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import torch</span><br><span class="line"></span><br><span class="line">x_data = [1.0,2.0,3.0]</span><br><span class="line">y_data = [2.0,4.0,6.0]</span><br><span class="line"></span><br><span class="line">w1 = torch.Tensor([1.0])#初始权值</span><br><span class="line">w1.requires_grad = True#计算梯度，默认是不计算的</span><br><span class="line">w2 = torch.Tensor([1.0])</span><br><span class="line">w2.requires_grad = True</span><br><span class="line">b = torch.Tensor([1.0])</span><br><span class="line">b.requires_grad = True</span><br><span class="line"></span><br><span class="line">def forward(x):</span><br><span class="line">    return w1 * x**2 + w2 * x + b</span><br><span class="line"></span><br><span class="line">def loss(x,y):#构建计算图</span><br><span class="line">    y_pred = forward(x)</span><br><span class="line">    return (y_pred-y) **2</span><br><span class="line"></span><br><span class="line">print(&#x27;Predict (befortraining)&#x27;,4,forward(4))</span><br><span class="line"></span><br><span class="line">for epoch in range(100):</span><br><span class="line">    l = loss(1, 2)#为了在for循环之前定义l,以便之后的输出，无实际意义</span><br><span class="line">    for x,y in zip(x_data,y_data):</span><br><span class="line">        l = loss(x, y)</span><br><span class="line">        l.backward()</span><br><span class="line">        print(&#x27;\tgrad:&#x27;,x,y,w1.grad.item(),w2.grad.item(),b.grad.item())</span><br><span class="line">        w1.data = w1.data - 0.01*w1.grad.data #注意这里的grad是一个tensor，所以要取他的data</span><br><span class="line">        w2.data = w2.data - 0.01 * w2.grad.data</span><br><span class="line">        b.data = b.data - 0.01 * b.grad.data</span><br><span class="line">        w1.grad.data.zero_() #释放之前计算的梯度</span><br><span class="line">        w2.grad.data.zero_()</span><br><span class="line">        b.grad.data.zero_()</span><br><span class="line">    print(&#x27;Epoch:&#x27;,epoch,l.item())</span><br><span class="line"></span><br><span class="line">print(&#x27;Predict(after training)&#x27;,4,forward(4).item())</span><br></pre></td></tr></table></figure>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>在用y&#x3D;w1x²+w2x+b的模型训练100次后可以看到当x&#x3D;4时，y&#x3D;8.5，与正确值8相差比较大。原因可能是数据集本身是一次函数的数据，模型是二次函数。所以模型本身就不适合这个数据集，所以才导致预测结果和正确值相差比较大的情况。</p>
+]]></content>
+      <categories>
+        <category>深度学习 神经网络 python pytorch</category>
+      </categories>
+      <tags>
+        <tag>深度学习 神经网络 python pytorch 反向传播</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linear Model</title>
+    <url>/2022/02/23/pytorch-3/</url>
+    <content><![CDATA[<h1 id="Linear-Model"><a href="#Linear-Model" class="headerlink" title="Linear Model"></a>Linear Model</h1><p>B站 刘二大人的Pytorch深度学习实践的线性模型。 </p>
+<p>代码说明：<br>1、函数forward()中，有一个变量w。这个变量最终的值是从for循环中传入的。<br>2、for循环中，使用了np.arange。<br>3、python中zip()函数的用法：<br>zip函数的原型为：<br>zip([iterable, …])<br>参数iterable为可迭代的对象，并且可以有多个参数。该函数返回一个以元组为元素的列表，其中第 i 个元组包含每个参数序列的第 i 个元素。返回的列表长度被截断为最短的参数序列的长度。只有一个序列参数时，它返回一个1元组的列表。没有参数时，它返回一个空的列表。</p>
+<p>今天学习的具体代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"> </span><br><span class="line">x_data = [1.0, 2.0, 3.0] # 这是x的值</span><br><span class="line">y_data = [2.0, 4.0, 6.0]# 这是y的真实值</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">def forward(x): </span><br><span class="line">    return x*w</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">def loss(x, y): #计算损失值</span><br><span class="line">    y_pred = forward(x)</span><br><span class="line">    return (y_pred - y)**2</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"># 穷举法</span><br><span class="line">w_list = []</span><br><span class="line">mse_list = []</span><br><span class="line">for w in np.arange(0.0, 4.1, 0.1):</span><br><span class="line">    print(&quot;w=&quot;, w)</span><br><span class="line">    l_sum = 0</span><br><span class="line">    for x_val, y_val in zip(x_data, y_data):</span><br><span class="line">        y_pred_val = forward(x_val)</span><br><span class="line">        loss_val = loss(x_val, y_val)</span><br><span class="line">        l_sum += loss_val</span><br><span class="line">        print(&#x27;\t&#x27;, x_val, y_val, y_pred_val, loss_val) # 将值一一打印出来</span><br><span class="line">    print(&#x27;MSE=&#x27;, l_sum/3)</span><br><span class="line">    w_list.append(w)</span><br><span class="line">    mse_list.append(l_sum/3)</span><br><span class="line">    </span><br><span class="line">plt.plot(w_list,mse_list)</span><br><span class="line">plt.ylabel(&#x27;Loss&#x27;)</span><br><span class="line">plt.xlabel(&#x27;w&#x27;)</span><br><span class="line">plt.show()    </span><br></pre></td></tr></table></figure>
+
+<p>布置的作业如下：<br><img src="https://img-blog.csdnimg.cn/481aaf057af847f1ad6959920f7054e4.png" alt="在这里插入图片描述"><br>实现代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">from matplotlib import cm</span><br><span class="line">from mpl_toolkits.mplot3d import Axes3D</span><br><span class="line"></span><br><span class="line"># y = x*2.5-1 构造训练数据</span><br><span class="line">x_data = [1.0, 2.0, 3.0]</span><br><span class="line">y_data = [1.5, 4.0, 6.5]</span><br><span class="line">W, B = np.arange(0.0, 4.1, 0.1), np.arange(-2.0, 2.1, 0.1) # 规定 W,B 的区间</span><br><span class="line">w, b = np.meshgrid(W, B, indexing=&#x27;ij&#x27;) # 构建矩阵坐标</span><br><span class="line"></span><br><span class="line">def forward(x):</span><br><span class="line">    return x*w+b</span><br><span class="line">    </span><br><span class="line">def loss(y_pred, y):</span><br><span class="line">    return (y_pred-y)*(y_pred-y)</span><br><span class="line"></span><br><span class="line"># Make data.</span><br><span class="line">mse_lst = []</span><br><span class="line">l_sum = 0.</span><br><span class="line">for x_val, y_val in zip(x_data, y_data):</span><br><span class="line">    y_pred_val = forward(x_val)</span><br><span class="line">    loss_val = loss(y_pred_val, y_val)</span><br><span class="line">    l_sum += loss_val</span><br><span class="line">mse_lst.append(l_sum/3)</span><br><span class="line"></span><br><span class="line"># 定义figure</span><br><span class="line">fig = plt.figure(figsize=(10,10), dpi=300)</span><br><span class="line"># 将figure变为3d</span><br><span class="line">ax = Axes3D(fig)</span><br><span class="line"># 绘图，rstride:行之间的跨度  cstride:列之间的跨度</span><br><span class="line">surf = ax.plot_surface(w, b, np.array(mse_lst[0]), rstride=1, cstride=1, cmap=cm.coolwarm, linewidth=0, antialiased=False)</span><br><span class="line"># Customize the z axis.</span><br><span class="line">ax.set_zlim(0, 40)</span><br><span class="line"># 设置坐标轴标签</span><br><span class="line">ax.set_xlabel(&quot;w&quot;)</span><br><span class="line">ax.set_ylabel(&quot;b&quot;)</span><br><span class="line">ax.set_zlabel(&quot;loss&quot;)</span><br><span class="line">ax.text(0.2, 2, 43, &quot;Cost Value&quot;, color=&#x27;black&#x27;)</span><br><span class="line"># Add a color bar which maps values to colors.</span><br><span class="line">fig.colorbar(surf, shrink=0.5, aspect=5)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>运行结果（不能说像，只能说一模一样）<br><img src="https://img-blog.csdnimg.cn/56aa557921724cf29cfc894ebbf02fd1.png" alt="在这里插入图片描述"></p>
+<h1 id="结束语："><a href="#结束语：" class="headerlink" title="结束语："></a>结束语：</h1><p>如果只看过线性模型视频很难把这个作业做出来，我们可以前九个视频看完了再回来慢慢做这个作业，线性模型的视频主要就是带我们慢慢走进深度学习，大家在学习的过程中一定不要着急。感谢大家的阅读。</p>
+]]></content>
+      <categories>
+        <category>深度学习 神经网络 python pytorch</category>
+      </categories>
+      <tags>
+        <tag>深度学习 神经网络 python pytorch 线性模型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>梯度下降算法</title>
+    <url>/2022/02/23/pytorch-4/</url>
+    <content><![CDATA[<h1 id="梯度下降算法"><a href="#梯度下降算法" class="headerlink" title="梯度下降算法"></a>梯度下降算法</h1><p>B站 刘二大人的PyTorch 深度学习实践 梯度下降法</p>
+<p>深度学习算法中，并没有过多的局部最优点。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"> </span><br><span class="line"># prepare the training set</span><br><span class="line">x_data = [1.0, 2.0, 3.0]</span><br><span class="line">y_data = [2.0, 4.0, 6.0]</span><br><span class="line"> </span><br><span class="line"># initial guess of weight </span><br><span class="line">w = 1.0</span><br><span class="line"> </span><br><span class="line"># define the model linear model y = w*x</span><br><span class="line">def forward(x):</span><br><span class="line">    return x*w</span><br><span class="line"> </span><br><span class="line">#define the cost function MSE </span><br><span class="line">def cost(xs, ys):</span><br><span class="line">    cost = 0</span><br><span class="line">    for x, y in zip(xs,ys):</span><br><span class="line">        y_pred = forward(x)</span><br><span class="line">        cost += (y_pred - y)**2</span><br><span class="line">    return cost / len(xs)</span><br><span class="line"> </span><br><span class="line"># define the gradient function  gd</span><br><span class="line">def gradient(xs,ys):</span><br><span class="line">    grad = 0</span><br><span class="line">    for x, y in zip(xs,ys):</span><br><span class="line">        grad += 2*x*(x*w - y)</span><br><span class="line">    return grad / len(xs)</span><br><span class="line"> </span><br><span class="line">epoch_list = []</span><br><span class="line">cost_list = []</span><br><span class="line">print(&#x27;predict (before training)&#x27;, 4, forward(4))</span><br><span class="line">for epoch in range(100):</span><br><span class="line">    cost_val = cost(x_data, y_data)</span><br><span class="line">    grad_val = gradient(x_data, y_data)</span><br><span class="line">    w-= 0.01 * grad_val  # 0.01 learning rate</span><br><span class="line">    print(&#x27;epoch:&#x27;, epoch, &#x27;w=&#x27;, w, &#x27;loss=&#x27;, cost_val)</span><br><span class="line">    epoch_list.append(epoch)</span><br><span class="line">    cost_list.append(cost_val)</span><br><span class="line"> </span><br><span class="line">print(&#x27;predict (after training)&#x27;, 4, forward(4))</span><br><span class="line">plt.plot(epoch_list,cost_list)</span><br><span class="line">plt.ylabel(&#x27;cost&#x27;)</span><br><span class="line">plt.xlabel(&#x27;epoch&#x27;)</span><br><span class="line">plt.show() </span><br></pre></td></tr></table></figure>
+<p>随机梯度下降法 源代码</p>
+<p>随机梯度下降法在神经网络中被证明是有效的。效率较低(时间复杂度较高)，学习性能较好。</p>
+<p>随机梯度下降法和梯度下降法的主要区别在于：</p>
+<p>1、损失函数由cost()更改为loss()。cost是计算所有训练数据的损失，loss是计算一个训练函数的损失。对应于源代码则是少了两个for循环。</p>
+<p>2、梯度函数gradient()由计算所有训练数据的梯度更改为计算一个训练数据的梯度。</p>
+<p>3、本算法中的随机梯度主要是指，每次拿一个训练数据来训练，然后更新梯度参数。本算法中梯度总共更新100(epoch)x3 &#x3D; 300次。梯度下降法中梯度总共更新100(epoch)次。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"> </span><br><span class="line">x_data = [1.0, 2.0, 3.0]</span><br><span class="line">y_data = [2.0, 4.0, 6.0]</span><br><span class="line"> </span><br><span class="line">w = 1.0</span><br><span class="line"> </span><br><span class="line">def forward(x):</span><br><span class="line">    return x*w</span><br><span class="line"> </span><br><span class="line"># calculate loss function</span><br><span class="line">def loss(x, y):</span><br><span class="line">    y_pred = forward(x)</span><br><span class="line">    return (y_pred - y)**2</span><br><span class="line"> </span><br><span class="line"># define the gradient function  sgd</span><br><span class="line">def gradient(x, y):</span><br><span class="line">    return 2*x*(x*w - y)</span><br><span class="line"> </span><br><span class="line">epoch_list = []</span><br><span class="line">loss_list = []</span><br><span class="line">print(&#x27;predict (before training)&#x27;, 4, forward(4))</span><br><span class="line">for epoch in range(100):</span><br><span class="line">    for x,y in zip(x_data, y_data):</span><br><span class="line">        grad = gradient(x,y)</span><br><span class="line">        w = w - 0.01*grad    # update weight by every grad of sample of training set</span><br><span class="line">        print(&quot;\tgrad:&quot;, x, y,grad)</span><br><span class="line">        l = loss(x,y)</span><br><span class="line">    print(&quot;progress:&quot;,epoch,&quot;w=&quot;,w,&quot;loss=&quot;,l)</span><br><span class="line">    epoch_list.append(epoch)</span><br><span class="line">    loss_list.append(l)</span><br><span class="line"> </span><br><span class="line">print(&#x27;predict (after training)&#x27;, 4, forward(4))</span><br><span class="line">plt.plot(epoch_list,loss_list)</span><br><span class="line">plt.ylabel(&#x27;loss&#x27;)</span><br><span class="line">plt.xlabel(&#x27;epoch&#x27;)</span><br><span class="line">plt.show() </span><br></pre></td></tr></table></figure>
+<h1 id="结束语："><a href="#结束语：" class="headerlink" title="结束语："></a>结束语：</h1><p>大家在学习过程中一定要吧损失值和梯度弄清楚，在视频中，老师很好的讲解了梯度和损失值，大家一定要仔细认真的学习。感谢大家的阅读</p>
+]]></content>
+      <categories>
+        <category>深度学习 神经网络 python pytorch</category>
+      </categories>
+      <tags>
+        <tag>深度学习 神经网络 python pytorch 梯度下降</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>逻辑斯蒂回归</title>
+    <url>/2022/02/23/pytorch-6/</url>
+    <content><![CDATA[<h1 id="逻辑斯蒂回归"><a href="#逻辑斯蒂回归" class="headerlink" title="逻辑斯蒂回归"></a>逻辑斯蒂回归</h1><p>B站 刘二大人 的PyTorch深度学习实践——逻辑斯蒂回归 </p>
+<p>视频中截图<br><img src="https://img-blog.csdnimg.cn/1ade78614c974c118dcf32dfec440b95.png" alt="在这里插入图片描述"><br>说明：<br>1、 逻辑斯蒂回归和线性模型的明显区别是在线性模型的后面，添加了激活函数(非线性变换)<br>2、分布的差异：KL散度，cross-entropy交叉熵<br>   <img src="https://img-blog.csdnimg.cn/350e517299e0458781ef2c06ae27b60d.png" alt="在这里插入图片描述"><br>说明：预测与标签越接近，BCE损失越小。</p>
+<p>代码说明：</p>
+<p>1、视频中代码F.sigmoid(self.linear(x))会引发warning，此处更改为torch.sigmoid(self.linear(x))<br>2、BCELoss - Binary CrossEntropyLoss<br>BCELoss 是CrossEntropyLoss的一个特例，只用于二分类问题，而CrossEntropyLoss可以用于二分类，也可以用于多分类。如果是二分类问题，建议BCELoss</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># import torch.nn.functional as F</span><br><span class="line"># prepare dataset</span><br><span class="line">x_data = torch.Tensor([[1.0], [2.0], [3.0]])</span><br><span class="line">y_data = torch.Tensor([[0], [0], [1]])</span><br><span class="line"> </span><br><span class="line">#design model using class</span><br><span class="line">class LogisticRegressionModel(torch.nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(LogisticRegressionModel, self).__init__()</span><br><span class="line">        self.linear = torch.nn.Linear(1,1)</span><br><span class="line"> </span><br><span class="line">    def forward(self, x):</span><br><span class="line">        # y_pred = F.sigmoid(self.linear(x))</span><br><span class="line">        y_pred = torch.sigmoid(self.linear(x))</span><br><span class="line">        return y_pred</span><br><span class="line">model = LogisticRegressionModel()</span><br><span class="line"> </span><br><span class="line"># construct loss and optimizer</span><br><span class="line"># 默认情况下，loss会基于element平均，如果size_average=False的话，loss会被累加。</span><br><span class="line">criterion = torch.nn.BCELoss(size_average = False) </span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)</span><br><span class="line"> </span><br><span class="line"># training cycle forward, backward, update</span><br><span class="line">for epoch in range(1000):</span><br><span class="line">    y_pred = model(x_data)</span><br><span class="line">    loss = criterion(y_pred, y_data)</span><br><span class="line">    print(epoch, loss.item())</span><br><span class="line"> </span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br><span class="line"> </span><br><span class="line">print(&#x27;w = &#x27;, model.linear.weight.item())</span><br><span class="line">print(&#x27;b = &#x27;, model.linear.bias.item())</span><br><span class="line"> </span><br><span class="line">x_test = torch.Tensor([[4.0]])</span><br><span class="line">y_test = model(x_test)</span><br><span class="line">print(&#x27;y_pred = &#x27;, y_test.data)</span><br></pre></td></tr></table></figure>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>其实大家仔细对比上一个文章的代码就会发现，我们只是把线性变化变成了非线性变化，毕竟生活中大多数的数据都是非线性变化的，加上优化器以后权重和梯度的计算就会自动进行啦，不用每次在手动计算了</p>
+]]></content>
+      <categories>
+        <category>深度学习 神经网络 python pytorch</category>
+      </categories>
+      <tags>
+        <tag>深度学习 神经网络 python pytorch 逻辑斯蒂回归</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>加载数据集</title>
+    <url>/2022/02/23/pytorch-8/</url>
+    <content><![CDATA[<h1 id="加载数据集"><a href="#加载数据集" class="headerlink" title="加载数据集"></a>加载数据集</h1><p>B站 刘二大人 的PyTorch深度学习实践——加载数据集</p>
+<p>这次的视频是继续优化上一个视频的代码，上次我们输入糖尿病病人的数据，在处理是没有才有分成几个部分的处理，而是一整坨的放进去进行计算了，所以在加载数据集这方面我们就优化一样，用MiniBatch将数据集进行划分。<br>说明：<br>1、DataSet 是抽象类，不能实例化对象，主要是用于构造我们的数据集<br>2、DataLoader 需要获取DataSet提供的索引[i]和len;用来帮助我们加载数据，比如说做shuffle(提高数据集的随机性)，batch_size,能拿出Mini-Batch进行训练。它帮我们自动完成这些工作。DataLoader可实例化对象。DataLoader is a class to help us loading data in Pytorch.<br>3、__getitem__目的是为支持下标(索引)操作<br>         <img src="https://img-blog.csdnimg.cn/f14371e9b9ce4ecfa44443e0dfd40339.png" alt="在这里插入图片描述"><br>代码说明：<br>1、需要mini_batch 就需要import DataSet和DataLoader<br>2、继承DataSet的类需要重写init，getitem,len魔法函数。分别是为了加载数据集，获取数据索引，获取数据总量。<br>3、DataLoader对数据集先打乱(shuffle)，然后划分成mini_batch。<br>4、len函数的返回值 除以 batch_size 的结果就是每一轮epoch中需要迭代的次数。<br>5、inputs, labels &#x3D; data中的inputs的shape是[32,8],labels 的shape是[32,1]。也就是说mini_batch在这个地方体现的<br>6、diabetes.csv数据集老师给了下载地址，该数据集需和源代码放在同一个文件夹内。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import torch</span><br><span class="line">import numpy as np</span><br><span class="line">from torch.utils.data import Dataset</span><br><span class="line">from torch.utils.data import DataLoader</span><br><span class="line"> </span><br><span class="line"># prepare dataset</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">class DiabetesDataset(Dataset):</span><br><span class="line">    def __init__(self, filepath):</span><br><span class="line">        xy = np.loadtxt(filepath, delimiter=&#x27;,&#x27;, dtype=np.float32)</span><br><span class="line">        self.len = xy.shape[0] # shape(多少行，多少列)</span><br><span class="line">        self.x_data = torch.from_numpy(xy[:, :-1])</span><br><span class="line">        self.y_data = torch.from_numpy(xy[:, [-1]])</span><br><span class="line"> </span><br><span class="line">    def __getitem__(self, index):</span><br><span class="line">        return self.x_data[index], self.y_data[index]</span><br><span class="line"> </span><br><span class="line">    def __len__(self):</span><br><span class="line">        return self.len</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">dataset = DiabetesDataset(&#x27;diabetes.csv&#x27;)</span><br><span class="line">train_loader = DataLoader(dataset=dataset, batch_size=32, shuffle=True, num_workers=2) #num_workers 多线程</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"># design model using class</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">class Model(torch.nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(Model, self).__init__()</span><br><span class="line">        self.linear1 = torch.nn.Linear(8, 6)</span><br><span class="line">        self.linear2 = torch.nn.Linear(6, 4)</span><br><span class="line">        self.linear3 = torch.nn.Linear(4, 1)</span><br><span class="line">        self.sigmoid = torch.nn.Sigmoid()</span><br><span class="line"> </span><br><span class="line">    def forward(self, x):</span><br><span class="line">        x = self.sigmoid(self.linear1(x))</span><br><span class="line">        x = self.sigmoid(self.linear2(x))</span><br><span class="line">        x = self.sigmoid(self.linear3(x))</span><br><span class="line">        return x</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">model = Model()</span><br><span class="line"> </span><br><span class="line"># construct loss and optimizer</span><br><span class="line">criterion = torch.nn.BCELoss(reduction=&#x27;mean&#x27;)</span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=0.01)</span><br><span class="line"> </span><br><span class="line"># training cycle forward, backward, update</span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    for epoch in range(100):</span><br><span class="line">        for i, data in enumerate(train_loader, 0): # train_loader 是先shuffle后mini_batch</span><br><span class="line">            inputs, labels = data</span><br><span class="line">            y_pred = model(inputs)</span><br><span class="line">            loss = criterion(y_pred, labels)</span><br><span class="line">            print(epoch, i, loss.item())</span><br><span class="line"> </span><br><span class="line">            optimizer.zero_grad()</span><br><span class="line">            loss.backward()</span><br><span class="line"> </span><br><span class="line">            optimizer.step()</span><br></pre></td></tr></table></figure>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p> 通过将数据集进行minibatch，我们的预测就将会更加准确。</p>
+]]></content>
+      <categories>
+        <category>深度学习 神经网络 python pytorch</category>
+      </categories>
+      <tags>
+        <tag>深度学习 神经网络 python pytorch 加载数据集</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>处理多维特征的输入</title>
+    <url>/2022/02/23/pytorch-7/</url>
+    <content><![CDATA[<h1 id="处理多维特征的输入"><a href="#处理多维特征的输入" class="headerlink" title="处理多维特征的输入"></a>处理多维特征的输入</h1><p>B站 刘二大人 的PyTorch深度学习实践——处理多维特征的输入</p>
+<p>视频中截图<br><img src="https://img-blog.csdnimg.cn/d78ed201e7264475b8027ed3694a217f.png" alt="在这里插入图片描述"><br>说明：1、乘的权重(w)都一样，加的偏置(b)也一样。b变成矩阵时使用广播机制。神经网络的参数w和b是网络需要学习的，其他是已知的。</p>
+<pre><code>      2、学习能力越强，有可能会把输入样本中噪声的规律也学到。我们要学习数据本身真实数据的规律，学习能力要有泛化能力。
+
+     3、该神经网络共3层；第一层是8维到6维的非线性空间变换，第二层是6维到4维的非线性空间变换，第三层是4维到1维的非线性空间变换。
+
+     4、本算法中torch.nn.Sigmoid() # 将其看作是网络的一层，而不是简单的函数使用 
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import torch</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"> </span><br><span class="line"># prepare dataset</span><br><span class="line">xy = np.loadtxt(&#x27;diabetes.csv&#x27;, delimiter=&#x27;,&#x27;, dtype=np.float32)</span><br><span class="line">x_data = torch.from_numpy(xy[:, :-1]) # 第一个‘：’是指读取所有行，第二个‘：’是指从第一列开始，最后一列不要</span><br><span class="line">y_data = torch.from_numpy(xy[:, [-1]]) # [-1] 最后得到的是个矩阵</span><br><span class="line"> </span><br><span class="line"># design model using class</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">class Model(torch.nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(Model, self).__init__()</span><br><span class="line">        self.linear1 = torch.nn.Linear(8, 6) # 输入数据x的特征是8维，x有8个特征</span><br><span class="line">        self.linear2 = torch.nn.Linear(6, 4)</span><br><span class="line">        self.linear3 = torch.nn.Linear(4, 1)</span><br><span class="line">        self.sigmoid = torch.nn.Sigmoid() # 将其看作是网络的一层，而不是简单的函数使用</span><br><span class="line"> </span><br><span class="line">    def forward(self, x):</span><br><span class="line">        x = self.sigmoid(self.linear1(x))</span><br><span class="line">        x = self.sigmoid(self.linear2(x))</span><br><span class="line">        x = self.sigmoid(self.linear3(x)) # y hat</span><br><span class="line">        return x</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">model = Model()</span><br><span class="line"> </span><br><span class="line"># construct loss and optimizer</span><br><span class="line"># criterion = torch.nn.BCELoss(size_average = True)</span><br><span class="line">criterion = torch.nn.BCELoss(reduction=&#x27;mean&#x27;)  </span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=0.1)</span><br><span class="line"> </span><br><span class="line">epoch_list = []</span><br><span class="line">loss_list = []</span><br><span class="line"># training cycle forward, backward, update</span><br><span class="line">for epoch in range(100):</span><br><span class="line">    y_pred = model(x_data)</span><br><span class="line">    loss = criterion(y_pred, y_data)</span><br><span class="line">    print(epoch, loss.item())</span><br><span class="line">    epoch_list.append(epoch)</span><br><span class="line">    loss_list.append(loss.item())</span><br><span class="line"> </span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    loss.backward()</span><br><span class="line"> </span><br><span class="line">    optimizer.step()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">plt.plot(epoch_list, loss_list)</span><br><span class="line">plt.ylabel(&#x27;loss&#x27;)</span><br><span class="line">plt.xlabel(&#x27;epoch&#x27;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p>代码说明 ：1、diabetes.csv数据集老师给了下载地址，该数据集需和源代码放在同一个文件夹内。</p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>我们采用的数据集是从是老师那里下载的糖尿病病人的数据，可以用来预测之后是否会康复。所谓的多维特征的输入也就是说明我们要输入的数据集升级到了矩阵的形式，但即使是矩阵形式的输入，我们的代码大致上是变化不大的，可想而知pytorch是多么的强大。</p>
+]]></content>
+      <categories>
+        <category>深度学习 神经网络 python pytorch</category>
+      </categories>
+      <tags>
+        <tag>深度学习 神经网络 python pytorch 处理多维特征的输入</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>多分类问题</title>
+    <url>/2022/02/23/pytorch-9/</url>
+    <content><![CDATA[<h1 id="多分类问题"><a href="#多分类问题" class="headerlink" title="多分类问题"></a>多分类问题</h1><p>B站 刘二大人 的PyTorch深度学习实践——多分类问题<br><img src="https://img-blog.csdnimg.cn/af23e64e91d44a7e98bf1d5035493979.png" alt="在这里插入图片描述"><br>在多分类的视频中，我们了解到，我们要对图中的数字进行输出分类，判断他们是什么数字，这里就会出现两个问题，一个是让输出相互抑制，并且让概率之和相加正好为1，二是概率都大于0.</p>
+<p>说明：<br>1、softmax的输入不需要再做非线性变换，也就是说softmax之前不再需要激活函数(relu)。softmax两个作用，如果在进行softmax前的input有负数，通过指数变换，得到正数。所有类的概率求和为1。<br>2、y的标签编码方式是one-hot。我对one-hot的理解是只有一位是1，其他位为0。(但是标签的one-hot编码是算法完成的，算法的输入仍为原始标签)<br>3、多分类问题，标签y的类型是LongTensor。比如说0-9分类问题，如果y &#x3D; torch.LongTensor([3])，对应的one-hot是[0,0,0,1,0,0,0,0,0,0].(这里要注意，如果使用了one-hot，标签y的类型是LongTensor，糖尿病数据集中的target的类型是FloatTensor)<br>4、CrossEntropyLoss &lt;&#x3D;&#x3D;&gt; LogSoftmax + NLLLoss。也就是说使用CrossEntropyLoss最后一层(线性层)是不需要做其他变化的；使用NLLLoss之前，需要对最后一层(线性层)先进行SoftMax处理，再进行log操作。<br><img src="https://img-blog.csdnimg.cn/8134dae687eb44ba95b98e887144d3da.png"><br><img src="https://img-blog.csdnimg.cn/e1de7156582c42d98820e997f609fa64.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/6632fa2a085141ebb418fe50c7336184.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/12c5a2d972bb4d268379311df9257ed9.png" alt="在这里插入图片描述"><br>代码说明：<br>1、第8讲 from torch.utils.data import Dataset，第9讲 from torchvision import datasets。该datasets里面init，getitem,len魔法函数已实现。<br>2、torch.max的返回值有两个，第一个是每一行的最大值是多少，第二个是每一行最大值的下标(索引)是多少。<br>3、全连接神经网络<br>4、torch.no_grad()   Python中with的用法<br>5、代码中”_”的说明  Python中各种下划线的操作<br> 6、torch.max( )的用法  torch.max( )使用讲解</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import torch</span><br><span class="line">from torchvision import transforms</span><br><span class="line">from torchvision import datasets</span><br><span class="line">from torch.utils.data import DataLoader</span><br><span class="line">import torch.nn.functional as F</span><br><span class="line">import torch.optim as optim</span><br><span class="line"> </span><br><span class="line"># prepare dataset</span><br><span class="line"> </span><br><span class="line">batch_size = 64</span><br><span class="line">transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]) # 归一化,均值和方差</span><br><span class="line"> </span><br><span class="line">train_dataset = datasets.MNIST(root=&#x27;../dataset/mnist/&#x27;, train=True, download=True, transform=transform)</span><br><span class="line">train_loader = DataLoader(train_dataset, shuffle=True, batch_size=batch_size)</span><br><span class="line">test_dataset = datasets.MNIST(root=&#x27;../dataset/mnist/&#x27;, train=False, download=True, transform=transform)</span><br><span class="line">test_loader = DataLoader(test_dataset, shuffle=False, batch_size=batch_size)</span><br><span class="line"> </span><br><span class="line"># design model using class</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">class Net(torch.nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(Net, self).__init__()</span><br><span class="line">        self.l1 = torch.nn.Linear(784, 512) #数据为28X28的矩阵</span><br><span class="line">        self.l2 = torch.nn.Linear(512, 256)</span><br><span class="line">        self.l3 = torch.nn.Linear(256, 128)</span><br><span class="line">        self.l4 = torch.nn.Linear(128, 64)</span><br><span class="line">        self.l5 = torch.nn.Linear(64, 10)</span><br><span class="line"> </span><br><span class="line">    def forward(self, x):</span><br><span class="line">        x = x.view(-1, 784)  # -1其实就是自动获取mini_batch</span><br><span class="line">        x = F.relu(self.l1(x))</span><br><span class="line">        x = F.relu(self.l2(x))</span><br><span class="line">        x = F.relu(self.l3(x))</span><br><span class="line">        x = F.relu(self.l4(x))</span><br><span class="line">        return self.l5(x)  # 最后一层不做激活，不进行非线性变换</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">model = Net()</span><br><span class="line"> </span><br><span class="line"># construct loss and optimizer</span><br><span class="line">criterion = torch.nn.CrossEntropyLoss()</span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.5)</span><br><span class="line"> </span><br><span class="line"># training cycle forward, backward, update</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">def train(epoch):</span><br><span class="line">    running_loss = 0.0</span><br><span class="line">    for batch_idx, data in enumerate(train_loader, 0):</span><br><span class="line">        # 获得一个批次的数据和标签</span><br><span class="line">        inputs, target = data</span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        # 获得模型预测结果(64, 10)</span><br><span class="line">        outputs = model(inputs)</span><br><span class="line">        # 交叉熵代价函数outputs(64,10),target（64）</span><br><span class="line">        loss = criterion(outputs, target)</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line"> </span><br><span class="line">        running_loss += loss.item()</span><br><span class="line">        if batch_idx % 300 == 299:</span><br><span class="line">            print(&#x27;[%d, %5d] loss: %.3f&#x27; % (epoch+1, batch_idx+1, running_loss/300))</span><br><span class="line">            running_loss = 0.0</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">def test():</span><br><span class="line">    correct = 0</span><br><span class="line">    total = 0</span><br><span class="line">    with torch.no_grad():</span><br><span class="line">        for data in test_loader:</span><br><span class="line">            images, labels = data</span><br><span class="line">            outputs = model(images)</span><br><span class="line">            _, predicted = torch.max(outputs.data, dim=1) # dim = 1 列是第0个维度，行是第1个维度</span><br><span class="line">            total += labels.size(0)</span><br><span class="line">            correct += (predicted == labels).sum().item() # 张量之间的比较运算</span><br><span class="line">    print(&#x27;accuracy on test set: %d %% &#x27; % (100*correct/total))</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    for epoch in range(10):</span><br><span class="line">        train(epoch)</span><br><span class="line">        test()</span><br></pre></td></tr></table></figure>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p> 对于多分类的应用可以有很多，比如人脸识别之类的，所以觉得难也是应该的，但我们不应该放弃，应该多思考，想办法解决问题。</p>
+]]></content>
+      <categories>
+        <category>深度学习 神经网络 python pytorch</category>
+      </categories>
+      <tags>
+        <tag>深度学习 神经网络 python pytorch 多分类问题</tag>
       </tags>
   </entry>
 </search>
