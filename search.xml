@@ -1,42 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Breath_First Search</title>
-    <url>/2022/02/14/Breath-First-Search/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>深度优先遍历(Depth First Search, 简称 DFS) 与广度优先遍历(Breath First Search)是图论中两种非常重要的算法,生产上广泛用于拓扑排序,寻路(走迷宫),搜索引擎,爬虫等,也频繁出现在 leetcode,高频面试题中。</p>
-<p>本文将会从以下几个方面来讲述广度优先遍历相信大家看了肯定会有收获。</p>
-<h1 id="广度优先遍历"><a href="#广度优先遍历" class="headerlink" title="广度优先遍历"></a>广度优先遍历</h1><ul>
-<li>广度优先遍历简介</li>
-<li>搜索引擎中的应用</li>
-</ul>
-<h2 id="广度优先遍历简介"><a href="#广度优先遍历简介" class="headerlink" title="广度优先遍历简介"></a>广度优先遍历简介</h2><p>广度优先遍历</p>
-<p>广度优先遍历,指的是从图的一个未遍历的节点出发,先遍历这个节点的相邻节点,再依次遍历每个相邻节点的相邻节点。</p>
-<p>上文所述树的广度优先遍历动图如下,每个节点的值即为它们的遍历顺序。所以广度优先遍历也叫层序遍历,先遍历第一层(节点 1),再遍历第二层(节点 2,3,4),第三层(5,6,7,8),第四层(9,10)。<br><img src="https://img-blog.csdnimg.cn/40f0c6261137430984dd15823fceec7c.gif#pic_center" alt="在这里插入图片描述"></p>
-<p>深度优先遍历用的是栈,而广度优先遍历要用队列来实现,我们以下图二叉树为例来看看如何用队列来实现广度优先遍历。</p>
-<p><img src="https://img-blog.csdnimg.cn/988de54666f04ee785c26b31882b365e.png" alt="在这里插入图片描述"><br>动图如下:</p>
-<p><img src="https://img-blog.csdnimg.cn/1a95d16c9e70495991bef1f00362ce01.gif#pic_center" alt="在这里插入图片描述"><br>相信看了以上动图,不难写出如下代码:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/** </span><br><span class="line"> * 使用队列实现 bfs </span><br><span class="line"> * @param root </span><br><span class="line"> */ </span><br><span class="line">private static void bfs(Node root) &#123; </span><br><span class="line">    if (root == null) &#123; </span><br><span class="line">        return; </span><br><span class="line">    &#125; </span><br><span class="line">    Queue&lt;Node&gt; stack = new LinkedList&lt;&gt;(); </span><br><span class="line">    stack.add(root); </span><br><span class="line"> </span><br><span class="line">    while (!stack.isEmpty()) &#123; </span><br><span class="line">        Node node = stack.poll(); </span><br><span class="line">        System.out.println(&quot;value = &quot; + node.value); </span><br><span class="line">        Node left = node.left; </span><br><span class="line">        if (left != null) &#123; </span><br><span class="line">            stack.add(left); </span><br><span class="line">        &#125; </span><br><span class="line">        Node right = node.right; </span><br><span class="line">        if (right != null) &#123; </span><br><span class="line">            stack.add(right); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="搜索引擎中的应用"><a href="#搜索引擎中的应用" class="headerlink" title="搜索引擎中的应用"></a>搜索引擎中的应用</h2><p>DFS,BFS 在搜索引擎中的应用我们几乎每天都在 Google, Baidu 这些搜索引擎,那大家知道这些搜索引擎是怎么工作的吗?简单来说有三步:</p>
-<p>1、网页抓取</p>
-<p>搜索引擎通过爬虫将网页爬取，获得页面 HTML 代码存入数据库中</p>
-<p>2、预处理</p>
-<p>索引程序对抓取来的页面数据进行文字提取,中文分词,(倒排)索引等处理,以备排名程序使用</p>
-<p>3、排名</p>
-<p>用户输入关键词后,排名程序调用索引数据库数据,计算相关性,然后按一定格式生成搜索结果页面。</p>
-<p>我们重点看下第一步,网页抓取。</p>
-<p>这一步的大致操作如下,给爬虫分配一组起始的网页,我们知道网页里其实也包含了很多超链接,爬虫爬取一个网页后,解析提取出这个网页里的所有超链接.再依次爬取出这些超链接,再提取网页超链接。。。如此不断重复就能不断根据超链接提取网页,最终构成了一张图,于是问题就转化为了如何遍历这张图,显然可以用深度优先或广度优先的方式来遍历。</p>
-<p>如果是广度优先遍历,先依次爬取第一层的起始网页,再依次爬取每个网页里的超链接,如果是深度优先遍历,先爬取起始网页 1,再爬取此网页里的链接…,爬取完之后,再爬取起始网页 2…</p>
-<p>实际上爬虫是深度优先与广度优先两种策略一起用的,比如在起始网页里,有些网页比较重要(权重较高),那就先对这个网页做深度优先遍历,遍历完之后再对其他(权重一样的)起始网页做广度优先遍历。</p>
-<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>DFS 和 BFS 是非常重要的两种算法,大家一定要掌握,本文为了方便讲解,只对树做了DFS,BFS,大家可以试试如果用图的话该怎么写代码,原理其实也是一样,只不过图和树两者的表示形式不同而已,DFS 一般是解决连通性问题,而 BFS 一般是解决最短路径问题。<br>广度优先遍历是不是明显要比深度优先遍历简单得多,相信大家一定对广度优先遍历的理解更深了.若有不对的地方.欢迎指出.谢谢大家.</p>
-]]></content>
-      <categories>
-        <category>广度遍历算法 图</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Depth_First Search</title>
     <url>/2022/02/14/Depth-First-Search/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>深度优先遍历(Depth First Search, 简称 DFS) 与广度优先遍历(Breath First Search)是图论中两种非常重要的算法,生产上广泛用于拓扑排序,寻路(走迷宫),搜索引擎,爬虫等,也频繁出现在 leetcode,高频面试题中。</p>
@@ -91,36 +55,6 @@
       </tags>
   </entry>
   <entry>
-    <title>什么是pytorch</title>
-    <url>/2022/02/23/pytorch-1/</url>
-    <content><![CDATA[<h1 id="什么是pytorch"><a href="#什么是pytorch" class="headerlink" title="什么是pytorch"></a>什么是pytorch</h1><p><img src="https://img-blog.csdnimg.cn/5d5809b77a4e4fd2b48fad69c1747f08.png#pic_center" alt="在这里插入图片描述"></p>
-<p>PyTorch是一个提供两个高级功能的python包：<br>具有强GPU加速度的张量计算,如numpy.<br>深层神经网络建立在基于磁带的自动调整系统上<br>您可以重用您最喜爱的python软件包,如numpy，scipy和Cython，以便在需要时扩展PyTorch。</p>
-<h2 id="PyTorch在细粒度级别是由以下组件组成的库"><a href="#PyTorch在细粒度级别是由以下组件组成的库" class="headerlink" title="PyTorch在细粒度级别是由以下组件组成的库,"></a>PyTorch在细粒度级别是由以下组件组成的库,</h2><p>包 描述<br>torch 像NumPy这样的Tensor图书馆,拥有强大的GPU支持<br>torch.autograd 一种基于磁带的自动分类库，支持所有可区分的Tensor操作手电筒<br>torch.nn 一个神经网络库与autograd设计了最大的灵活性torch.optim 一种与torch.nn一起使用的优化包,具有标准优化方法,如SGD，RMSProp,LBFGS，Adam等。<br>torch.multiprocessing python多处理,但是具有魔法内存共享的手电筒传感器跨过程。适用于数据加载和hogwild培训。torch.utils DataLoader,Trainer等实用功能为方便起见<br>torch.legacy,.nn &#x2F; .optim, 由于向后兼容性原因,已经从割炬移植的旧代码<br>通常使用PyTorch可以:<br>使用GPU的功能代替numpy。 一个深刻的学习研究平台,提供最大的灵活性和速度<br>进一步阐述:</p>
-<h2 id="GPU准备好的Tensor库"><a href="#GPU准备好的Tensor库" class="headerlink" title="GPU准备好的Tensor库"></a>GPU准备好的Tensor库</h2><p>如果你使用numpy,那么你已经使用了Tensors(aka ndarray)。 GPU准备好的Tensor库<br><img src="https://img-blog.csdnimg.cn/fddbce9cb1b74a6db660ed061a085faf.png" alt="在这里插入图片描述"></p>
-<p>PyTorch提供可以在CPU或GPU上生活的Tensors,并加速计算量。</p>
-<p>我们提供各种各样的张量程序,以加速和适应您的科学计算需求,如切片,索引,数学运算,线性代数,缩减。他们快!</p>
-<p>动态神经网络,基于磁带的自动格式<br>PyTorch具有构建神经网络的独特方式,使用和重放磁带录音机。</p>
-<p>大多数框架,比如请输入代码TensorFlow,Theano,Caffe和CNTK拥有世界的静态视图。必须建立一个神经网络,并重复使用相同的结构。改变网络的行为方式意味着必须从头开始。</p>
-<p>使用PyTorch，我们使用一种称为反向模式自动分化的技术,它允许您以零延迟或开销改变网络的任意运行方式。我们的灵感来自于在这个题目的几个研究论文,以及当前和过去的工作,如 autograd, autograd, Chainer等。</p>
-<p>虽然这种技术并不是PyTorch所特有的,但它是迄今为止最快的实现之一。您可以为您的疯狂研究获得最佳的速度和灵活性。<br><img src="https://img-blog.csdnimg.cn/d923190d90d64d0389dbcc34ba2d7f42.gif#pic_center" alt="在这里插入图片描述"></p>
-<h2 id="Python第一"><a href="#Python第一" class="headerlink" title="Python第一"></a>Python第一</h2><p>PyTorch不是一个Python绑定到一个单一的C ++框架。它被构建为深入整合到Python中。您可以自然地使用它，就像您将使用numpy &#x2F; scipy &#x2F; scikit学习等。您可以使用自己喜欢的库并使用Cython和Numba等软件包，在Python本身编写新的神经网络层。我们的目标是不要在适当的时候重塑轮子。</p>
-<h2 id="势在必得的经验"><a href="#势在必得的经验" class="headerlink" title="势在必得的经验"></a>势在必得的经验</h2><p>PyTorch的设计是直观的，线性的思想和易于使用。当您执行一行代码时,它将被执行。没有一个异步的世界观。当您进入调试器或接收错误消息和堆栈跟踪时,理解它们是直接的。堆栈跟踪正好指向您的代码定义的位置。我们希望您不要花费几个小时来调试代码,因为堆栈跟踪错误或异步和不透明的执行引擎。</p>
-<h2 id="快速和精益"><a href="#快速和精益" class="headerlink" title="快速和精益"></a>快速和精益</h2><p>PyTorch具有最小的框架开销。我们集成加速库,如英特尔MKL和NVIDIA(CuDNN,NCCL)以最大限度地提高速度。核心是CPU和GPU Tensor和神经网络后端(TH,THC,THNN,THCUNN)都是用C99 API写成独立的库。 它们已经成熟,并已经过多年的测试。</p>
-<p>因此,PyTorch相当快 - 无论您是运行小型或大型神经网络。</p>
-<p>PyTorch的内存使用率与Torch或其他一些替代品相比非常有效。我们为GPU编写了自定义内存分配器,以确保您的深入学习模型具有最大的内存效率。这使您能够训练比以前更大的深入学习模型。</p>
-<h2 id="扩展没有痛苦"><a href="#扩展没有痛苦" class="headerlink" title="扩展没有痛苦"></a>扩展没有痛苦</h2><p>编写新的神经网络模块,或与PyTorch的Tensor API进行接口的设计是简单而且抽象最少的。</p>
-<p>您可以使用torch API 或您喜欢的基于numpy的库（如SciPy,在Python中编写新的神经网络层</p>
-<p>如果你想用C &#x2F; C ++图层，我们根据一个扩展API CFFI是有效的，并以最小的样板。 没有需要编写的包装器代码</p>
-<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>pytorch了解大概就这么多了,如果需要详细了解,可以去官方查看文档学习,谢谢大家的阅读。</p>
-]]></content>
-      <categories>
-        <category>深度学习 神经网络 pytorch</category>
-      </categories>
-      <tags>
-        <tag>深度学习 神经网络 pytorch</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/2022/02/11/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -158,6 +92,72 @@
       </categories>
       <tags>
         <tag>出生日</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>什么是pytorch</title>
+    <url>/2022/02/23/pytorch-1/</url>
+    <content><![CDATA[<h1 id="什么是pytorch"><a href="#什么是pytorch" class="headerlink" title="什么是pytorch"></a>什么是pytorch</h1><p><img src="https://img-blog.csdnimg.cn/5d5809b77a4e4fd2b48fad69c1747f08.png#pic_center" alt="在这里插入图片描述"></p>
+<p>PyTorch是一个提供两个高级功能的python包：<br>具有强GPU加速度的张量计算,如numpy.<br>深层神经网络建立在基于磁带的自动调整系统上<br>您可以重用您最喜爱的python软件包,如numpy，scipy和Cython，以便在需要时扩展PyTorch。</p>
+<h2 id="PyTorch在细粒度级别是由以下组件组成的库"><a href="#PyTorch在细粒度级别是由以下组件组成的库" class="headerlink" title="PyTorch在细粒度级别是由以下组件组成的库,"></a>PyTorch在细粒度级别是由以下组件组成的库,</h2><p>包 描述<br>torch 像NumPy这样的Tensor图书馆,拥有强大的GPU支持<br>torch.autograd 一种基于磁带的自动分类库，支持所有可区分的Tensor操作手电筒<br>torch.nn 一个神经网络库与autograd设计了最大的灵活性torch.optim 一种与torch.nn一起使用的优化包,具有标准优化方法,如SGD，RMSProp,LBFGS，Adam等。<br>torch.multiprocessing python多处理,但是具有魔法内存共享的手电筒传感器跨过程。适用于数据加载和hogwild培训。torch.utils DataLoader,Trainer等实用功能为方便起见<br>torch.legacy,.nn &#x2F; .optim, 由于向后兼容性原因,已经从割炬移植的旧代码<br>通常使用PyTorch可以:<br>使用GPU的功能代替numpy。 一个深刻的学习研究平台,提供最大的灵活性和速度<br>进一步阐述:</p>
+<h2 id="GPU准备好的Tensor库"><a href="#GPU准备好的Tensor库" class="headerlink" title="GPU准备好的Tensor库"></a>GPU准备好的Tensor库</h2><p>如果你使用numpy,那么你已经使用了Tensors(aka ndarray)。 GPU准备好的Tensor库<br><img src="https://img-blog.csdnimg.cn/fddbce9cb1b74a6db660ed061a085faf.png" alt="在这里插入图片描述"></p>
+<p>PyTorch提供可以在CPU或GPU上生活的Tensors,并加速计算量。</p>
+<p>我们提供各种各样的张量程序,以加速和适应您的科学计算需求,如切片,索引,数学运算,线性代数,缩减。他们快!</p>
+<p>动态神经网络,基于磁带的自动格式<br>PyTorch具有构建神经网络的独特方式,使用和重放磁带录音机。</p>
+<p>大多数框架,比如请输入代码TensorFlow,Theano,Caffe和CNTK拥有世界的静态视图。必须建立一个神经网络,并重复使用相同的结构。改变网络的行为方式意味着必须从头开始。</p>
+<p>使用PyTorch，我们使用一种称为反向模式自动分化的技术,它允许您以零延迟或开销改变网络的任意运行方式。我们的灵感来自于在这个题目的几个研究论文,以及当前和过去的工作,如 autograd, autograd, Chainer等。</p>
+<p>虽然这种技术并不是PyTorch所特有的,但它是迄今为止最快的实现之一。您可以为您的疯狂研究获得最佳的速度和灵活性。<br><img src="https://img-blog.csdnimg.cn/d923190d90d64d0389dbcc34ba2d7f42.gif#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="Python第一"><a href="#Python第一" class="headerlink" title="Python第一"></a>Python第一</h2><p>PyTorch不是一个Python绑定到一个单一的C ++框架。它被构建为深入整合到Python中。您可以自然地使用它，就像您将使用numpy &#x2F; scipy &#x2F; scikit学习等。您可以使用自己喜欢的库并使用Cython和Numba等软件包，在Python本身编写新的神经网络层。我们的目标是不要在适当的时候重塑轮子。</p>
+<h2 id="势在必得的经验"><a href="#势在必得的经验" class="headerlink" title="势在必得的经验"></a>势在必得的经验</h2><p>PyTorch的设计是直观的，线性的思想和易于使用。当您执行一行代码时,它将被执行。没有一个异步的世界观。当您进入调试器或接收错误消息和堆栈跟踪时,理解它们是直接的。堆栈跟踪正好指向您的代码定义的位置。我们希望您不要花费几个小时来调试代码,因为堆栈跟踪错误或异步和不透明的执行引擎。</p>
+<h2 id="快速和精益"><a href="#快速和精益" class="headerlink" title="快速和精益"></a>快速和精益</h2><p>PyTorch具有最小的框架开销。我们集成加速库,如英特尔MKL和NVIDIA(CuDNN,NCCL)以最大限度地提高速度。核心是CPU和GPU Tensor和神经网络后端(TH,THC,THNN,THCUNN)都是用C99 API写成独立的库。 它们已经成熟,并已经过多年的测试。</p>
+<p>因此,PyTorch相当快 - 无论您是运行小型或大型神经网络。</p>
+<p>PyTorch的内存使用率与Torch或其他一些替代品相比非常有效。我们为GPU编写了自定义内存分配器,以确保您的深入学习模型具有最大的内存效率。这使您能够训练比以前更大的深入学习模型。</p>
+<h2 id="扩展没有痛苦"><a href="#扩展没有痛苦" class="headerlink" title="扩展没有痛苦"></a>扩展没有痛苦</h2><p>编写新的神经网络模块,或与PyTorch的Tensor API进行接口的设计是简单而且抽象最少的。</p>
+<p>您可以使用torch API 或您喜欢的基于numpy的库（如SciPy,在Python中编写新的神经网络层</p>
+<p>如果你想用C &#x2F; C ++图层，我们根据一个扩展API CFFI是有效的，并以最小的样板。 没有需要编写的包装器代码</p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>pytorch了解大概就这么多了,如果需要详细了解,可以去官方查看文档学习,谢谢大家的阅读。</p>
+]]></content>
+      <categories>
+        <category>深度学习 神经网络 pytorch</category>
+      </categories>
+      <tags>
+        <tag>深度学习 神经网络 pytorch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Breath_First Search</title>
+    <url>/2022/02/14/Breath-First-Search/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>深度优先遍历(Depth First Search, 简称 DFS) 与广度优先遍历(Breath First Search)是图论中两种非常重要的算法,生产上广泛用于拓扑排序,寻路(走迷宫),搜索引擎,爬虫等,也频繁出现在 leetcode,高频面试题中。</p>
+<p>本文将会从以下几个方面来讲述广度优先遍历相信大家看了肯定会有收获。</p>
+<h1 id="广度优先遍历"><a href="#广度优先遍历" class="headerlink" title="广度优先遍历"></a>广度优先遍历</h1><ul>
+<li>广度优先遍历简介</li>
+<li>搜索引擎中的应用</li>
+</ul>
+<h2 id="广度优先遍历简介"><a href="#广度优先遍历简介" class="headerlink" title="广度优先遍历简介"></a>广度优先遍历简介</h2><p>广度优先遍历</p>
+<p>广度优先遍历,指的是从图的一个未遍历的节点出发,先遍历这个节点的相邻节点,再依次遍历每个相邻节点的相邻节点。</p>
+<p>上文所述树的广度优先遍历动图如下,每个节点的值即为它们的遍历顺序。所以广度优先遍历也叫层序遍历,先遍历第一层(节点 1),再遍历第二层(节点 2,3,4),第三层(5,6,7,8),第四层(9,10)。<br><img src="https://img-blog.csdnimg.cn/40f0c6261137430984dd15823fceec7c.gif#pic_center" alt="在这里插入图片描述"></p>
+<p>深度优先遍历用的是栈,而广度优先遍历要用队列来实现,我们以下图二叉树为例来看看如何用队列来实现广度优先遍历。</p>
+<p><img src="https://img-blog.csdnimg.cn/988de54666f04ee785c26b31882b365e.png" alt="在这里插入图片描述"><br>动图如下:</p>
+<p><img src="https://img-blog.csdnimg.cn/1a95d16c9e70495991bef1f00362ce01.gif#pic_center" alt="在这里插入图片描述"><br>相信看了以上动图,不难写出如下代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/** </span><br><span class="line"> * 使用队列实现 bfs </span><br><span class="line"> * @param root </span><br><span class="line"> */ </span><br><span class="line">private static void bfs(Node root) &#123; </span><br><span class="line">    if (root == null) &#123; </span><br><span class="line">        return; </span><br><span class="line">    &#125; </span><br><span class="line">    Queue&lt;Node&gt; stack = new LinkedList&lt;&gt;(); </span><br><span class="line">    stack.add(root); </span><br><span class="line"> </span><br><span class="line">    while (!stack.isEmpty()) &#123; </span><br><span class="line">        Node node = stack.poll(); </span><br><span class="line">        System.out.println(&quot;value = &quot; + node.value); </span><br><span class="line">        Node left = node.left; </span><br><span class="line">        if (left != null) &#123; </span><br><span class="line">            stack.add(left); </span><br><span class="line">        &#125; </span><br><span class="line">        Node right = node.right; </span><br><span class="line">        if (right != null) &#123; </span><br><span class="line">            stack.add(right); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="搜索引擎中的应用"><a href="#搜索引擎中的应用" class="headerlink" title="搜索引擎中的应用"></a>搜索引擎中的应用</h2><p>DFS,BFS 在搜索引擎中的应用我们几乎每天都在 Google, Baidu 这些搜索引擎,那大家知道这些搜索引擎是怎么工作的吗?简单来说有三步:</p>
+<p>1、网页抓取</p>
+<p>搜索引擎通过爬虫将网页爬取，获得页面 HTML 代码存入数据库中</p>
+<p>2、预处理</p>
+<p>索引程序对抓取来的页面数据进行文字提取,中文分词,(倒排)索引等处理,以备排名程序使用</p>
+<p>3、排名</p>
+<p>用户输入关键词后,排名程序调用索引数据库数据,计算相关性,然后按一定格式生成搜索结果页面。</p>
+<p>我们重点看下第一步,网页抓取。</p>
+<p>这一步的大致操作如下,给爬虫分配一组起始的网页,我们知道网页里其实也包含了很多超链接,爬虫爬取一个网页后,解析提取出这个网页里的所有超链接.再依次爬取出这些超链接,再提取网页超链接。。。如此不断重复就能不断根据超链接提取网页,最终构成了一张图,于是问题就转化为了如何遍历这张图,显然可以用深度优先或广度优先的方式来遍历。</p>
+<p>如果是广度优先遍历,先依次爬取第一层的起始网页,再依次爬取每个网页里的超链接,如果是深度优先遍历,先爬取起始网页 1,再爬取此网页里的链接…,爬取完之后,再爬取起始网页 2…</p>
+<p>实际上爬虫是深度优先与广度优先两种策略一起用的,比如在起始网页里,有些网页比较重要(权重较高),那就先对这个网页做深度优先遍历,遍历完之后再对其他(权重一样的)起始网页做广度优先遍历。</p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>DFS 和 BFS 是非常重要的两种算法,大家一定要掌握,本文为了方便讲解,只对树做了DFS,BFS,大家可以试试如果用图的话该怎么写代码,原理其实也是一样,只不过图和树两者的表示形式不同而已,DFS 一般是解决连通性问题,而 BFS 一般是解决最短路径问题。<br>广度优先遍历是不是明显要比深度优先遍历简单得多,相信大家一定对广度优先遍历的理解更深了.若有不对的地方.欢迎指出.谢谢大家.</p>
+]]></content>
+      <categories>
+        <category>广度遍历算法 图</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
       </tags>
   </entry>
   <entry>
@@ -423,26 +423,25 @@
       </tags>
   </entry>
   <entry>
-    <title>反向传播back propagation</title>
-    <url>/2022/02/23/pytorch-5/</url>
-    <content><![CDATA[<h1 id="反向传播back-propagation"><a href="#反向传播back-propagation" class="headerlink" title="反向传播back propagation"></a>反向传播back propagation</h1><p>B站 刘二大人的PyTroch 深度学习实践——反向传播</p>
-<p> 代码说明：</p>
-<p>1、w是Tensor(张量类型)，Tensor中包含data和grad，data和grad也是Tensor。grad初始为None，调用l.backward()方法后w.grad为Tensor，故更新w.data时需使用w.grad.data。如果w需要计算梯度，那构建的计算图中，跟w相关的tensor都默认需要计算梯度。</p>
-<p>刘老师视频中a &#x3D; torch.Tensor([1.0]) 本文中更改为 a &#x3D; torch.tensor([1.0])。两种方法都可以，个人习惯第二种。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import torch</span><br><span class="line">a = torch.tensor([1.0])</span><br><span class="line">a.requires_grad = True # 或者 a.requires_grad_()</span><br><span class="line">print(a)</span><br><span class="line">print(a.data)</span><br><span class="line">print(a.type())             # a的类型是tensor</span><br><span class="line">print(a.data.type())        # a.data的类型是tensor</span><br><span class="line">print(a.grad)</span><br><span class="line">print(type(a.grad))</span><br></pre></td></tr></table></figure>
-<p>结果为：<br><img src="https://img-blog.csdnimg.cn/220b558edf9042ba8734847d2026fca1.png" alt="在这里插入图片描述"><br>2、w是Tensor， forward函数的返回值也是Tensor，loss函数的返回值也是Tensor</p>
-<p>3、本算法中反向传播主要体现在，l.backward()。调用该方法后w.grad由None更新为Tensor类型，且w.grad.data的值用于后续w.data的更新。<br> l.backward()会把计算图中所有需要梯度(grad)的地方都会求出来，然后把梯度都存在对应的待求的参数中，最终计算图被释放。<br>取tensor中的data是不会构建计算图的。<br>   <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import torch</span><br><span class="line">x_data = [1.0, 2.0, 3.0]</span><br><span class="line">y_data = [2.0, 4.0, 6.0]</span><br><span class="line"> </span><br><span class="line">w = torch.tensor([1.0]) # w的初值为1.0</span><br><span class="line">w.requires_grad = True # 需要计算梯度</span><br><span class="line"> </span><br><span class="line">def forward(x):</span><br><span class="line">    return x*w  # w是一个Tensor</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">def loss(x, y):</span><br><span class="line">    y_pred = forward(x)</span><br><span class="line">    return (y_pred - y)**2</span><br><span class="line"> </span><br><span class="line">print(&quot;predict (before training)&quot;, 4, forward(4).item())</span><br><span class="line"> </span><br><span class="line">for epoch in range(100):</span><br><span class="line">    for x, y in zip(x_data, y_data):</span><br><span class="line">        l =loss(x,y) # l是一个张量，tensor主要是在建立计算图 forward, compute the loss</span><br><span class="line">        l.backward() #  backward,compute grad for Tensor whose requires_grad set to True</span><br><span class="line">        print(&#x27;\tgrad:&#x27;, x, y, w.grad.item())</span><br><span class="line">        w.data = w.data - 0.01 * w.grad.data   # 权重更新时，注意grad也是一个tensor</span><br><span class="line"> </span><br><span class="line">        w.grad.data.zero_() # after update, remember set the grad to zero</span><br><span class="line"> </span><br><span class="line">    print(&#x27;progress:&#x27;, epoch, l.item()) # 取出loss使用l.item，不要直接使用l（l是tensor会构建计算图）</span><br><span class="line"> </span><br><span class="line">print(&quot;predict (after training)&quot;, 4, forward(4).item())</span><br></pre></td></tr></table></figure></p>
-<h1 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h1><p>课程中留的三个作业<br>1、手动推导线性模型y&#x3D;w<em>x，损失函数loss&#x3D;(ŷ-y)²下，当数据集x&#x3D;2,y&#x3D;4的时候，反向传播的过程。<br>答：<br><img src="https://img-blog.csdnimg.cn/05806f6ee85c46b888ca3a708cf3edad.png" alt="在这里插入图片描述"><br>2、手动推导线性模型 y&#x3D;w</em>x+b，损失函数loss&#x3D;(ŷ-y)²下，当数据集x&#x3D;1,y&#x3D;2的时候，反向传播的过程。</p>
-<p>答：<br><img src="https://img-blog.csdnimg.cn/fc2f4e77713e4da084d6c0415786729d.png" alt="在这里插入图片描述"><br>3、画出二次模型y&#x3D;w1x²+w2x+b，损失函数loss&#x3D;(ŷ-y)²的计算图，并且手动推导反向传播的过程，最后用pytorch的代码实现。</p>
-<p>答：<br>构建和推导的过程<br><img src="https://img-blog.csdnimg.cn/cc9478d3dc524f3fa44d9b4096309222.png" alt="在这里插入图片描述"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import torch</span><br><span class="line"></span><br><span class="line">x_data = [1.0,2.0,3.0]</span><br><span class="line">y_data = [2.0,4.0,6.0]</span><br><span class="line"></span><br><span class="line">w1 = torch.Tensor([1.0])#初始权值</span><br><span class="line">w1.requires_grad = True#计算梯度，默认是不计算的</span><br><span class="line">w2 = torch.Tensor([1.0])</span><br><span class="line">w2.requires_grad = True</span><br><span class="line">b = torch.Tensor([1.0])</span><br><span class="line">b.requires_grad = True</span><br><span class="line"></span><br><span class="line">def forward(x):</span><br><span class="line">    return w1 * x**2 + w2 * x + b</span><br><span class="line"></span><br><span class="line">def loss(x,y):#构建计算图</span><br><span class="line">    y_pred = forward(x)</span><br><span class="line">    return (y_pred-y) **2</span><br><span class="line"></span><br><span class="line">print(&#x27;Predict (befortraining)&#x27;,4,forward(4))</span><br><span class="line"></span><br><span class="line">for epoch in range(100):</span><br><span class="line">    l = loss(1, 2)#为了在for循环之前定义l,以便之后的输出，无实际意义</span><br><span class="line">    for x,y in zip(x_data,y_data):</span><br><span class="line">        l = loss(x, y)</span><br><span class="line">        l.backward()</span><br><span class="line">        print(&#x27;\tgrad:&#x27;,x,y,w1.grad.item(),w2.grad.item(),b.grad.item())</span><br><span class="line">        w1.data = w1.data - 0.01*w1.grad.data #注意这里的grad是一个tensor，所以要取他的data</span><br><span class="line">        w2.data = w2.data - 0.01 * w2.grad.data</span><br><span class="line">        b.data = b.data - 0.01 * b.grad.data</span><br><span class="line">        w1.grad.data.zero_() #释放之前计算的梯度</span><br><span class="line">        w2.grad.data.zero_()</span><br><span class="line">        b.grad.data.zero_()</span><br><span class="line">    print(&#x27;Epoch:&#x27;,epoch,l.item())</span><br><span class="line"></span><br><span class="line">print(&#x27;Predict(after training)&#x27;,4,forward(4).item())</span><br></pre></td></tr></table></figure>
-<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>在用y&#x3D;w1x²+w2x+b的模型训练100次后可以看到当x&#x3D;4时，y&#x3D;8.5，与正确值8相差比较大。原因可能是数据集本身是一次函数的数据，模型是二次函数。所以模型本身就不适合这个数据集，所以才导致预测结果和正确值相差比较大的情况。</p>
+    <title>梯度下降算法</title>
+    <url>/2022/02/23/pytorch-4/</url>
+    <content><![CDATA[<h1 id="梯度下降算法"><a href="#梯度下降算法" class="headerlink" title="梯度下降算法"></a>梯度下降算法</h1><p>B站 刘二大人的PyTorch 深度学习实践 梯度下降法</p>
+<p>深度学习算法中，并没有过多的局部最优点。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"> </span><br><span class="line"># prepare the training set</span><br><span class="line">x_data = [1.0, 2.0, 3.0]</span><br><span class="line">y_data = [2.0, 4.0, 6.0]</span><br><span class="line"> </span><br><span class="line"># initial guess of weight </span><br><span class="line">w = 1.0</span><br><span class="line"> </span><br><span class="line"># define the model linear model y = w*x</span><br><span class="line">def forward(x):</span><br><span class="line">    return x*w</span><br><span class="line"> </span><br><span class="line">#define the cost function MSE </span><br><span class="line">def cost(xs, ys):</span><br><span class="line">    cost = 0</span><br><span class="line">    for x, y in zip(xs,ys):</span><br><span class="line">        y_pred = forward(x)</span><br><span class="line">        cost += (y_pred - y)**2</span><br><span class="line">    return cost / len(xs)</span><br><span class="line"> </span><br><span class="line"># define the gradient function  gd</span><br><span class="line">def gradient(xs,ys):</span><br><span class="line">    grad = 0</span><br><span class="line">    for x, y in zip(xs,ys):</span><br><span class="line">        grad += 2*x*(x*w - y)</span><br><span class="line">    return grad / len(xs)</span><br><span class="line"> </span><br><span class="line">epoch_list = []</span><br><span class="line">cost_list = []</span><br><span class="line">print(&#x27;predict (before training)&#x27;, 4, forward(4))</span><br><span class="line">for epoch in range(100):</span><br><span class="line">    cost_val = cost(x_data, y_data)</span><br><span class="line">    grad_val = gradient(x_data, y_data)</span><br><span class="line">    w-= 0.01 * grad_val  # 0.01 learning rate</span><br><span class="line">    print(&#x27;epoch:&#x27;, epoch, &#x27;w=&#x27;, w, &#x27;loss=&#x27;, cost_val)</span><br><span class="line">    epoch_list.append(epoch)</span><br><span class="line">    cost_list.append(cost_val)</span><br><span class="line"> </span><br><span class="line">print(&#x27;predict (after training)&#x27;, 4, forward(4))</span><br><span class="line">plt.plot(epoch_list,cost_list)</span><br><span class="line">plt.ylabel(&#x27;cost&#x27;)</span><br><span class="line">plt.xlabel(&#x27;epoch&#x27;)</span><br><span class="line">plt.show() </span><br></pre></td></tr></table></figure>
+<p>随机梯度下降法 源代码</p>
+<p>随机梯度下降法在神经网络中被证明是有效的。效率较低(时间复杂度较高)，学习性能较好。</p>
+<p>随机梯度下降法和梯度下降法的主要区别在于：</p>
+<p>1、损失函数由cost()更改为loss()。cost是计算所有训练数据的损失，loss是计算一个训练函数的损失。对应于源代码则是少了两个for循环。</p>
+<p>2、梯度函数gradient()由计算所有训练数据的梯度更改为计算一个训练数据的梯度。</p>
+<p>3、本算法中的随机梯度主要是指，每次拿一个训练数据来训练，然后更新梯度参数。本算法中梯度总共更新100(epoch)x3 &#x3D; 300次。梯度下降法中梯度总共更新100(epoch)次。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"> </span><br><span class="line">x_data = [1.0, 2.0, 3.0]</span><br><span class="line">y_data = [2.0, 4.0, 6.0]</span><br><span class="line"> </span><br><span class="line">w = 1.0</span><br><span class="line"> </span><br><span class="line">def forward(x):</span><br><span class="line">    return x*w</span><br><span class="line"> </span><br><span class="line"># calculate loss function</span><br><span class="line">def loss(x, y):</span><br><span class="line">    y_pred = forward(x)</span><br><span class="line">    return (y_pred - y)**2</span><br><span class="line"> </span><br><span class="line"># define the gradient function  sgd</span><br><span class="line">def gradient(x, y):</span><br><span class="line">    return 2*x*(x*w - y)</span><br><span class="line"> </span><br><span class="line">epoch_list = []</span><br><span class="line">loss_list = []</span><br><span class="line">print(&#x27;predict (before training)&#x27;, 4, forward(4))</span><br><span class="line">for epoch in range(100):</span><br><span class="line">    for x,y in zip(x_data, y_data):</span><br><span class="line">        grad = gradient(x,y)</span><br><span class="line">        w = w - 0.01*grad    # update weight by every grad of sample of training set</span><br><span class="line">        print(&quot;\tgrad:&quot;, x, y,grad)</span><br><span class="line">        l = loss(x,y)</span><br><span class="line">    print(&quot;progress:&quot;,epoch,&quot;w=&quot;,w,&quot;loss=&quot;,l)</span><br><span class="line">    epoch_list.append(epoch)</span><br><span class="line">    loss_list.append(l)</span><br><span class="line"> </span><br><span class="line">print(&#x27;predict (after training)&#x27;, 4, forward(4))</span><br><span class="line">plt.plot(epoch_list,loss_list)</span><br><span class="line">plt.ylabel(&#x27;loss&#x27;)</span><br><span class="line">plt.xlabel(&#x27;epoch&#x27;)</span><br><span class="line">plt.show() </span><br></pre></td></tr></table></figure>
+<h1 id="结束语："><a href="#结束语：" class="headerlink" title="结束语："></a>结束语：</h1><p>大家在学习过程中一定要吧损失值和梯度弄清楚，在视频中，老师很好的讲解了梯度和损失值，大家一定要仔细认真的学习。感谢大家的阅读</p>
 ]]></content>
       <categories>
         <category>深度学习 神经网络 python pytorch</category>
       </categories>
       <tags>
-        <tag>深度学习 神经网络 python pytorch 反向传播</tag>
+        <tag>深度学习 神经网络 python pytorch 梯度下降</tag>
       </tags>
   </entry>
   <entry>
@@ -466,25 +465,41 @@
       </tags>
   </entry>
   <entry>
-    <title>梯度下降算法</title>
-    <url>/2022/02/23/pytorch-4/</url>
-    <content><![CDATA[<h1 id="梯度下降算法"><a href="#梯度下降算法" class="headerlink" title="梯度下降算法"></a>梯度下降算法</h1><p>B站 刘二大人的PyTorch 深度学习实践 梯度下降法</p>
-<p>深度学习算法中，并没有过多的局部最优点。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"> </span><br><span class="line"># prepare the training set</span><br><span class="line">x_data = [1.0, 2.0, 3.0]</span><br><span class="line">y_data = [2.0, 4.0, 6.0]</span><br><span class="line"> </span><br><span class="line"># initial guess of weight </span><br><span class="line">w = 1.0</span><br><span class="line"> </span><br><span class="line"># define the model linear model y = w*x</span><br><span class="line">def forward(x):</span><br><span class="line">    return x*w</span><br><span class="line"> </span><br><span class="line">#define the cost function MSE </span><br><span class="line">def cost(xs, ys):</span><br><span class="line">    cost = 0</span><br><span class="line">    for x, y in zip(xs,ys):</span><br><span class="line">        y_pred = forward(x)</span><br><span class="line">        cost += (y_pred - y)**2</span><br><span class="line">    return cost / len(xs)</span><br><span class="line"> </span><br><span class="line"># define the gradient function  gd</span><br><span class="line">def gradient(xs,ys):</span><br><span class="line">    grad = 0</span><br><span class="line">    for x, y in zip(xs,ys):</span><br><span class="line">        grad += 2*x*(x*w - y)</span><br><span class="line">    return grad / len(xs)</span><br><span class="line"> </span><br><span class="line">epoch_list = []</span><br><span class="line">cost_list = []</span><br><span class="line">print(&#x27;predict (before training)&#x27;, 4, forward(4))</span><br><span class="line">for epoch in range(100):</span><br><span class="line">    cost_val = cost(x_data, y_data)</span><br><span class="line">    grad_val = gradient(x_data, y_data)</span><br><span class="line">    w-= 0.01 * grad_val  # 0.01 learning rate</span><br><span class="line">    print(&#x27;epoch:&#x27;, epoch, &#x27;w=&#x27;, w, &#x27;loss=&#x27;, cost_val)</span><br><span class="line">    epoch_list.append(epoch)</span><br><span class="line">    cost_list.append(cost_val)</span><br><span class="line"> </span><br><span class="line">print(&#x27;predict (after training)&#x27;, 4, forward(4))</span><br><span class="line">plt.plot(epoch_list,cost_list)</span><br><span class="line">plt.ylabel(&#x27;cost&#x27;)</span><br><span class="line">plt.xlabel(&#x27;epoch&#x27;)</span><br><span class="line">plt.show() </span><br></pre></td></tr></table></figure>
-<p>随机梯度下降法 源代码</p>
-<p>随机梯度下降法在神经网络中被证明是有效的。效率较低(时间复杂度较高)，学习性能较好。</p>
-<p>随机梯度下降法和梯度下降法的主要区别在于：</p>
-<p>1、损失函数由cost()更改为loss()。cost是计算所有训练数据的损失，loss是计算一个训练函数的损失。对应于源代码则是少了两个for循环。</p>
-<p>2、梯度函数gradient()由计算所有训练数据的梯度更改为计算一个训练数据的梯度。</p>
-<p>3、本算法中的随机梯度主要是指，每次拿一个训练数据来训练，然后更新梯度参数。本算法中梯度总共更新100(epoch)x3 &#x3D; 300次。梯度下降法中梯度总共更新100(epoch)次。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"> </span><br><span class="line">x_data = [1.0, 2.0, 3.0]</span><br><span class="line">y_data = [2.0, 4.0, 6.0]</span><br><span class="line"> </span><br><span class="line">w = 1.0</span><br><span class="line"> </span><br><span class="line">def forward(x):</span><br><span class="line">    return x*w</span><br><span class="line"> </span><br><span class="line"># calculate loss function</span><br><span class="line">def loss(x, y):</span><br><span class="line">    y_pred = forward(x)</span><br><span class="line">    return (y_pred - y)**2</span><br><span class="line"> </span><br><span class="line"># define the gradient function  sgd</span><br><span class="line">def gradient(x, y):</span><br><span class="line">    return 2*x*(x*w - y)</span><br><span class="line"> </span><br><span class="line">epoch_list = []</span><br><span class="line">loss_list = []</span><br><span class="line">print(&#x27;predict (before training)&#x27;, 4, forward(4))</span><br><span class="line">for epoch in range(100):</span><br><span class="line">    for x,y in zip(x_data, y_data):</span><br><span class="line">        grad = gradient(x,y)</span><br><span class="line">        w = w - 0.01*grad    # update weight by every grad of sample of training set</span><br><span class="line">        print(&quot;\tgrad:&quot;, x, y,grad)</span><br><span class="line">        l = loss(x,y)</span><br><span class="line">    print(&quot;progress:&quot;,epoch,&quot;w=&quot;,w,&quot;loss=&quot;,l)</span><br><span class="line">    epoch_list.append(epoch)</span><br><span class="line">    loss_list.append(l)</span><br><span class="line"> </span><br><span class="line">print(&#x27;predict (after training)&#x27;, 4, forward(4))</span><br><span class="line">plt.plot(epoch_list,loss_list)</span><br><span class="line">plt.ylabel(&#x27;loss&#x27;)</span><br><span class="line">plt.xlabel(&#x27;epoch&#x27;)</span><br><span class="line">plt.show() </span><br></pre></td></tr></table></figure>
-<h1 id="结束语："><a href="#结束语：" class="headerlink" title="结束语："></a>结束语：</h1><p>大家在学习过程中一定要吧损失值和梯度弄清楚，在视频中，老师很好的讲解了梯度和损失值，大家一定要仔细认真的学习。感谢大家的阅读</p>
+    <title>反向传播back propagation</title>
+    <url>/2022/02/23/pytorch-5/</url>
+    <content><![CDATA[<h1 id="反向传播back-propagation"><a href="#反向传播back-propagation" class="headerlink" title="反向传播back propagation"></a>反向传播back propagation</h1><p>B站 刘二大人的PyTroch 深度学习实践——反向传播</p>
+<p> 代码说明：</p>
+<p>1、w是Tensor(张量类型)，Tensor中包含data和grad，data和grad也是Tensor。grad初始为None，调用l.backward()方法后w.grad为Tensor，故更新w.data时需使用w.grad.data。如果w需要计算梯度，那构建的计算图中，跟w相关的tensor都默认需要计算梯度。</p>
+<p>刘老师视频中a &#x3D; torch.Tensor([1.0]) 本文中更改为 a &#x3D; torch.tensor([1.0])。两种方法都可以，个人习惯第二种。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import torch</span><br><span class="line">a = torch.tensor([1.0])</span><br><span class="line">a.requires_grad = True # 或者 a.requires_grad_()</span><br><span class="line">print(a)</span><br><span class="line">print(a.data)</span><br><span class="line">print(a.type())             # a的类型是tensor</span><br><span class="line">print(a.data.type())        # a.data的类型是tensor</span><br><span class="line">print(a.grad)</span><br><span class="line">print(type(a.grad))</span><br></pre></td></tr></table></figure>
+<p>结果为：<br><img src="https://img-blog.csdnimg.cn/220b558edf9042ba8734847d2026fca1.png" alt="在这里插入图片描述"><br>2、w是Tensor， forward函数的返回值也是Tensor，loss函数的返回值也是Tensor</p>
+<p>3、本算法中反向传播主要体现在，l.backward()。调用该方法后w.grad由None更新为Tensor类型，且w.grad.data的值用于后续w.data的更新。<br> l.backward()会把计算图中所有需要梯度(grad)的地方都会求出来，然后把梯度都存在对应的待求的参数中，最终计算图被释放。<br>取tensor中的data是不会构建计算图的。<br>   <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import torch</span><br><span class="line">x_data = [1.0, 2.0, 3.0]</span><br><span class="line">y_data = [2.0, 4.0, 6.0]</span><br><span class="line"> </span><br><span class="line">w = torch.tensor([1.0]) # w的初值为1.0</span><br><span class="line">w.requires_grad = True # 需要计算梯度</span><br><span class="line"> </span><br><span class="line">def forward(x):</span><br><span class="line">    return x*w  # w是一个Tensor</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">def loss(x, y):</span><br><span class="line">    y_pred = forward(x)</span><br><span class="line">    return (y_pred - y)**2</span><br><span class="line"> </span><br><span class="line">print(&quot;predict (before training)&quot;, 4, forward(4).item())</span><br><span class="line"> </span><br><span class="line">for epoch in range(100):</span><br><span class="line">    for x, y in zip(x_data, y_data):</span><br><span class="line">        l =loss(x,y) # l是一个张量，tensor主要是在建立计算图 forward, compute the loss</span><br><span class="line">        l.backward() #  backward,compute grad for Tensor whose requires_grad set to True</span><br><span class="line">        print(&#x27;\tgrad:&#x27;, x, y, w.grad.item())</span><br><span class="line">        w.data = w.data - 0.01 * w.grad.data   # 权重更新时，注意grad也是一个tensor</span><br><span class="line"> </span><br><span class="line">        w.grad.data.zero_() # after update, remember set the grad to zero</span><br><span class="line"> </span><br><span class="line">    print(&#x27;progress:&#x27;, epoch, l.item()) # 取出loss使用l.item，不要直接使用l（l是tensor会构建计算图）</span><br><span class="line"> </span><br><span class="line">print(&quot;predict (after training)&quot;, 4, forward(4).item())</span><br></pre></td></tr></table></figure></p>
+<h1 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h1><p>课程中留的三个作业<br>1、手动推导线性模型y&#x3D;w<em>x，损失函数loss&#x3D;(ŷ-y)²下，当数据集x&#x3D;2,y&#x3D;4的时候，反向传播的过程。<br>答：<br><img src="https://img-blog.csdnimg.cn/05806f6ee85c46b888ca3a708cf3edad.png" alt="在这里插入图片描述"><br>2、手动推导线性模型 y&#x3D;w</em>x+b，损失函数loss&#x3D;(ŷ-y)²下，当数据集x&#x3D;1,y&#x3D;2的时候，反向传播的过程。</p>
+<p>答：<br><img src="https://img-blog.csdnimg.cn/fc2f4e77713e4da084d6c0415786729d.png" alt="在这里插入图片描述"><br>3、画出二次模型y&#x3D;w1x²+w2x+b，损失函数loss&#x3D;(ŷ-y)²的计算图，并且手动推导反向传播的过程，最后用pytorch的代码实现。</p>
+<p>答：<br>构建和推导的过程<br><img src="https://img-blog.csdnimg.cn/cc9478d3dc524f3fa44d9b4096309222.png" alt="在这里插入图片描述"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import torch</span><br><span class="line"></span><br><span class="line">x_data = [1.0,2.0,3.0]</span><br><span class="line">y_data = [2.0,4.0,6.0]</span><br><span class="line"></span><br><span class="line">w1 = torch.Tensor([1.0])#初始权值</span><br><span class="line">w1.requires_grad = True#计算梯度，默认是不计算的</span><br><span class="line">w2 = torch.Tensor([1.0])</span><br><span class="line">w2.requires_grad = True</span><br><span class="line">b = torch.Tensor([1.0])</span><br><span class="line">b.requires_grad = True</span><br><span class="line"></span><br><span class="line">def forward(x):</span><br><span class="line">    return w1 * x**2 + w2 * x + b</span><br><span class="line"></span><br><span class="line">def loss(x,y):#构建计算图</span><br><span class="line">    y_pred = forward(x)</span><br><span class="line">    return (y_pred-y) **2</span><br><span class="line"></span><br><span class="line">print(&#x27;Predict (befortraining)&#x27;,4,forward(4))</span><br><span class="line"></span><br><span class="line">for epoch in range(100):</span><br><span class="line">    l = loss(1, 2)#为了在for循环之前定义l,以便之后的输出，无实际意义</span><br><span class="line">    for x,y in zip(x_data,y_data):</span><br><span class="line">        l = loss(x, y)</span><br><span class="line">        l.backward()</span><br><span class="line">        print(&#x27;\tgrad:&#x27;,x,y,w1.grad.item(),w2.grad.item(),b.grad.item())</span><br><span class="line">        w1.data = w1.data - 0.01*w1.grad.data #注意这里的grad是一个tensor，所以要取他的data</span><br><span class="line">        w2.data = w2.data - 0.01 * w2.grad.data</span><br><span class="line">        b.data = b.data - 0.01 * b.grad.data</span><br><span class="line">        w1.grad.data.zero_() #释放之前计算的梯度</span><br><span class="line">        w2.grad.data.zero_()</span><br><span class="line">        b.grad.data.zero_()</span><br><span class="line">    print(&#x27;Epoch:&#x27;,epoch,l.item())</span><br><span class="line"></span><br><span class="line">print(&#x27;Predict(after training)&#x27;,4,forward(4).item())</span><br></pre></td></tr></table></figure>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>在用y&#x3D;w1x²+w2x+b的模型训练100次后可以看到当x&#x3D;4时，y&#x3D;8.5，与正确值8相差比较大。原因可能是数据集本身是一次函数的数据，模型是二次函数。所以模型本身就不适合这个数据集，所以才导致预测结果和正确值相差比较大的情况。</p>
 ]]></content>
       <categories>
         <category>深度学习 神经网络 python pytorch</category>
       </categories>
       <tags>
-        <tag>深度学习 神经网络 python pytorch 梯度下降</tag>
+        <tag>深度学习 神经网络 python pytorch 反向传播</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>加载数据集</title>
+    <url>/2022/02/23/pytorch-8/</url>
+    <content><![CDATA[<h1 id="加载数据集"><a href="#加载数据集" class="headerlink" title="加载数据集"></a>加载数据集</h1><p>B站 刘二大人 的PyTorch深度学习实践——加载数据集</p>
+<p>这次的视频是继续优化上一个视频的代码，上次我们输入糖尿病病人的数据，在处理是没有才有分成几个部分的处理，而是一整坨的放进去进行计算了，所以在加载数据集这方面我们就优化一样，用MiniBatch将数据集进行划分。<br>说明：<br>1、DataSet 是抽象类，不能实例化对象，主要是用于构造我们的数据集<br>2、DataLoader 需要获取DataSet提供的索引[i]和len;用来帮助我们加载数据，比如说做shuffle(提高数据集的随机性)，batch_size,能拿出Mini-Batch进行训练。它帮我们自动完成这些工作。DataLoader可实例化对象。DataLoader is a class to help us loading data in Pytorch.<br>3、__getitem__目的是为支持下标(索引)操作<br>         <img src="https://img-blog.csdnimg.cn/f14371e9b9ce4ecfa44443e0dfd40339.png" alt="在这里插入图片描述"><br>代码说明：<br>1、需要mini_batch 就需要import DataSet和DataLoader<br>2、继承DataSet的类需要重写init，getitem,len魔法函数。分别是为了加载数据集，获取数据索引，获取数据总量。<br>3、DataLoader对数据集先打乱(shuffle)，然后划分成mini_batch。<br>4、len函数的返回值 除以 batch_size 的结果就是每一轮epoch中需要迭代的次数。<br>5、inputs, labels &#x3D; data中的inputs的shape是[32,8],labels 的shape是[32,1]。也就是说mini_batch在这个地方体现的<br>6、diabetes.csv数据集老师给了下载地址，该数据集需和源代码放在同一个文件夹内。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import torch</span><br><span class="line">import numpy as np</span><br><span class="line">from torch.utils.data import Dataset</span><br><span class="line">from torch.utils.data import DataLoader</span><br><span class="line"> </span><br><span class="line"># prepare dataset</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">class DiabetesDataset(Dataset):</span><br><span class="line">    def __init__(self, filepath):</span><br><span class="line">        xy = np.loadtxt(filepath, delimiter=&#x27;,&#x27;, dtype=np.float32)</span><br><span class="line">        self.len = xy.shape[0] # shape(多少行，多少列)</span><br><span class="line">        self.x_data = torch.from_numpy(xy[:, :-1])</span><br><span class="line">        self.y_data = torch.from_numpy(xy[:, [-1]])</span><br><span class="line"> </span><br><span class="line">    def __getitem__(self, index):</span><br><span class="line">        return self.x_data[index], self.y_data[index]</span><br><span class="line"> </span><br><span class="line">    def __len__(self):</span><br><span class="line">        return self.len</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">dataset = DiabetesDataset(&#x27;diabetes.csv&#x27;)</span><br><span class="line">train_loader = DataLoader(dataset=dataset, batch_size=32, shuffle=True, num_workers=2) #num_workers 多线程</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"># design model using class</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">class Model(torch.nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(Model, self).__init__()</span><br><span class="line">        self.linear1 = torch.nn.Linear(8, 6)</span><br><span class="line">        self.linear2 = torch.nn.Linear(6, 4)</span><br><span class="line">        self.linear3 = torch.nn.Linear(4, 1)</span><br><span class="line">        self.sigmoid = torch.nn.Sigmoid()</span><br><span class="line"> </span><br><span class="line">    def forward(self, x):</span><br><span class="line">        x = self.sigmoid(self.linear1(x))</span><br><span class="line">        x = self.sigmoid(self.linear2(x))</span><br><span class="line">        x = self.sigmoid(self.linear3(x))</span><br><span class="line">        return x</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">model = Model()</span><br><span class="line"> </span><br><span class="line"># construct loss and optimizer</span><br><span class="line">criterion = torch.nn.BCELoss(reduction=&#x27;mean&#x27;)</span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=0.01)</span><br><span class="line"> </span><br><span class="line"># training cycle forward, backward, update</span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    for epoch in range(100):</span><br><span class="line">        for i, data in enumerate(train_loader, 0): # train_loader 是先shuffle后mini_batch</span><br><span class="line">            inputs, labels = data</span><br><span class="line">            y_pred = model(inputs)</span><br><span class="line">            loss = criterion(y_pred, labels)</span><br><span class="line">            print(epoch, i, loss.item())</span><br><span class="line"> </span><br><span class="line">            optimizer.zero_grad()</span><br><span class="line">            loss.backward()</span><br><span class="line"> </span><br><span class="line">            optimizer.step()</span><br></pre></td></tr></table></figure>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p> 通过将数据集进行minibatch，我们的预测就将会更加准确。</p>
+]]></content>
+      <categories>
+        <category>深度学习 神经网络 python pytorch</category>
+      </categories>
+      <tags>
+        <tag>深度学习 神经网络 python pytorch 加载数据集</tag>
       </tags>
   </entry>
   <entry>
@@ -502,21 +517,6 @@
       </categories>
       <tags>
         <tag>深度学习 神经网络 python pytorch 逻辑斯蒂回归</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>加载数据集</title>
-    <url>/2022/02/23/pytorch-8/</url>
-    <content><![CDATA[<h1 id="加载数据集"><a href="#加载数据集" class="headerlink" title="加载数据集"></a>加载数据集</h1><p>B站 刘二大人 的PyTorch深度学习实践——加载数据集</p>
-<p>这次的视频是继续优化上一个视频的代码，上次我们输入糖尿病病人的数据，在处理是没有才有分成几个部分的处理，而是一整坨的放进去进行计算了，所以在加载数据集这方面我们就优化一样，用MiniBatch将数据集进行划分。<br>说明：<br>1、DataSet 是抽象类，不能实例化对象，主要是用于构造我们的数据集<br>2、DataLoader 需要获取DataSet提供的索引[i]和len;用来帮助我们加载数据，比如说做shuffle(提高数据集的随机性)，batch_size,能拿出Mini-Batch进行训练。它帮我们自动完成这些工作。DataLoader可实例化对象。DataLoader is a class to help us loading data in Pytorch.<br>3、__getitem__目的是为支持下标(索引)操作<br>         <img src="https://img-blog.csdnimg.cn/f14371e9b9ce4ecfa44443e0dfd40339.png" alt="在这里插入图片描述"><br>代码说明：<br>1、需要mini_batch 就需要import DataSet和DataLoader<br>2、继承DataSet的类需要重写init，getitem,len魔法函数。分别是为了加载数据集，获取数据索引，获取数据总量。<br>3、DataLoader对数据集先打乱(shuffle)，然后划分成mini_batch。<br>4、len函数的返回值 除以 batch_size 的结果就是每一轮epoch中需要迭代的次数。<br>5、inputs, labels &#x3D; data中的inputs的shape是[32,8],labels 的shape是[32,1]。也就是说mini_batch在这个地方体现的<br>6、diabetes.csv数据集老师给了下载地址，该数据集需和源代码放在同一个文件夹内。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import torch</span><br><span class="line">import numpy as np</span><br><span class="line">from torch.utils.data import Dataset</span><br><span class="line">from torch.utils.data import DataLoader</span><br><span class="line"> </span><br><span class="line"># prepare dataset</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">class DiabetesDataset(Dataset):</span><br><span class="line">    def __init__(self, filepath):</span><br><span class="line">        xy = np.loadtxt(filepath, delimiter=&#x27;,&#x27;, dtype=np.float32)</span><br><span class="line">        self.len = xy.shape[0] # shape(多少行，多少列)</span><br><span class="line">        self.x_data = torch.from_numpy(xy[:, :-1])</span><br><span class="line">        self.y_data = torch.from_numpy(xy[:, [-1]])</span><br><span class="line"> </span><br><span class="line">    def __getitem__(self, index):</span><br><span class="line">        return self.x_data[index], self.y_data[index]</span><br><span class="line"> </span><br><span class="line">    def __len__(self):</span><br><span class="line">        return self.len</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">dataset = DiabetesDataset(&#x27;diabetes.csv&#x27;)</span><br><span class="line">train_loader = DataLoader(dataset=dataset, batch_size=32, shuffle=True, num_workers=2) #num_workers 多线程</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"># design model using class</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">class Model(torch.nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(Model, self).__init__()</span><br><span class="line">        self.linear1 = torch.nn.Linear(8, 6)</span><br><span class="line">        self.linear2 = torch.nn.Linear(6, 4)</span><br><span class="line">        self.linear3 = torch.nn.Linear(4, 1)</span><br><span class="line">        self.sigmoid = torch.nn.Sigmoid()</span><br><span class="line"> </span><br><span class="line">    def forward(self, x):</span><br><span class="line">        x = self.sigmoid(self.linear1(x))</span><br><span class="line">        x = self.sigmoid(self.linear2(x))</span><br><span class="line">        x = self.sigmoid(self.linear3(x))</span><br><span class="line">        return x</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">model = Model()</span><br><span class="line"> </span><br><span class="line"># construct loss and optimizer</span><br><span class="line">criterion = torch.nn.BCELoss(reduction=&#x27;mean&#x27;)</span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=0.01)</span><br><span class="line"> </span><br><span class="line"># training cycle forward, backward, update</span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    for epoch in range(100):</span><br><span class="line">        for i, data in enumerate(train_loader, 0): # train_loader 是先shuffle后mini_batch</span><br><span class="line">            inputs, labels = data</span><br><span class="line">            y_pred = model(inputs)</span><br><span class="line">            loss = criterion(y_pred, labels)</span><br><span class="line">            print(epoch, i, loss.item())</span><br><span class="line"> </span><br><span class="line">            optimizer.zero_grad()</span><br><span class="line">            loss.backward()</span><br><span class="line"> </span><br><span class="line">            optimizer.step()</span><br></pre></td></tr></table></figure>
-<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p> 通过将数据集进行minibatch，我们的预测就将会更加准确。</p>
-]]></content>
-      <categories>
-        <category>深度学习 神经网络 python pytorch</category>
-      </categories>
-      <tags>
-        <tag>深度学习 神经网络 python pytorch 加载数据集</tag>
       </tags>
   </entry>
   <entry>
@@ -540,6 +540,109 @@
       </categories>
       <tags>
         <tag>深度学习 神经网络 python pytorch 处理多维特征的输入</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>机器学习篇-逻辑回归的分类预测</title>
+    <url>/2022/04/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AF%87-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E5%88%86%E7%B1%BB%E9%A2%84%E6%B5%8B/</url>
+    <content><![CDATA[<h1 id="机器学习篇-逻辑回归的分类预测"><a href="#机器学习篇-逻辑回归的分类预测" class="headerlink" title="机器学习篇-逻辑回归的分类预测"></a>机器学习篇-逻辑回归的分类预测</h1><h2 id="1-逻辑回归的介绍和应用"><a href="#1-逻辑回归的介绍和应用" class="headerlink" title="1 逻辑回归的介绍和应用"></a>1 逻辑回归的介绍和应用</h2><h3 id="1-1-逻辑回归的介绍"><a href="#1-1-逻辑回归的介绍" class="headerlink" title="1.1 逻辑回归的介绍"></a>1.1 逻辑回归的介绍</h3><p>逻辑回归（Logistic regression，简称LR）虽然其中带有”回归”两个字，但逻辑回归其实是一个分类模型，并且广泛应用于各个领域之中。虽然现在深度学习相对于这些传统方法更为火热，但实则这些传统方法由于其独特的优势依然广泛应用于各个领域中。</p>
+<p>而对于逻辑回归而且，最为突出的两点就是其模型简单和模型的可解释性强。</p>
+<p>逻辑回归模型的优劣势:</p>
+<p>优点：实现简单，易于理解和实现；计算代价不高，速度很快，存储资源低；<br>缺点：容易欠拟合，分类精度可能不高</p>
+<h3 id="1-2-逻辑回归的应用"><a href="#1-2-逻辑回归的应用" class="headerlink" title="1.2 逻辑回归的应用"></a>1.2 逻辑回归的应用</h3><p>逻辑回归模型广泛用于各个领域，包括机器学习，大多数医学领域和社会科学。例如，最初由Boyd 等人开发的创伤和损伤严重度评分（TRISS）被广泛用于预测受伤患者的死亡率，使用逻辑回归 基于观察到的患者特征（年龄，性别，体重指数,各种血液检查的结果等）分析预测发生特定疾病（例如糖尿病，冠心病）的风险。逻辑回归模型也用于预测在给定的过程中，系统或产品的故障的可能性。还用于市场营销应用程序，例如预测客户购买产品或中止订购的倾向等。在经济学中它可以用来预测一个人选择进入劳动力市场的可能性，而商业应用则可以用来预测房主拖欠抵押贷款的可能性。条件随机字段是逻辑回归到顺序数据的扩展，用于自然语言处理。</p>
+<p>逻辑回归模型现在同样是很多分类算法的基础组件,比如 分类任务中基于GBDT算法+LR逻辑回归实现的信用卡交易反欺诈，CTR(点击通过率)预估等，其好处在于输出值自然地落在0到1之间，并且有概率意义。模型清晰，有对应的概率学理论基础。它拟合出来的参数就代表了每一个特征(feature)对结果的影响。也是一个理解数据的好工具。但同时由于其本质上是一个线性的分类器，所以不能应对较为复杂的数据情况。很多时候我们也会拿逻辑回归模型去做一些任务尝试的基线（基础水平）。</p>
+<p>说了这些逻辑回归的概念和应用，大家应该已经对其有所期待了吧，那么我们现在开始吧！！！</p>
+<h2 id="2-学习目标"><a href="#2-学习目标" class="headerlink" title="2 学习目标"></a>2 学习目标</h2><p>了解 逻辑回归 的理论<br>掌握 逻辑回归 的 sklearn 函数调用使用并将其运用到鸢尾花数据集预测</p>
+<h2 id="3-代码流程"><a href="#3-代码流程" class="headerlink" title="3 代码流程"></a>3 代码流程</h2><p>基于鸢尾花（iris）数据集的逻辑回归分类实践<br>Step1:库函数导入<br>Step2:数据读取&#x2F;载入<br>Step3:数据信息简单查看<br>Step4:可视化描述<br>Step5:利用 逻辑回归模型 在二分类上 进行训练和预测<br>Step5:利用 逻辑回归模型 在三分类(多分类)上 进行训练和预测</p>
+<h2 id="4-基于鸢尾花（iris）数据集的逻辑回归分类实践"><a href="#4-基于鸢尾花（iris）数据集的逻辑回归分类实践" class="headerlink" title="4 基于鸢尾花（iris）数据集的逻辑回归分类实践"></a>4 基于鸢尾花（iris）数据集的逻辑回归分类实践</h2><p>在实践的最开始，我们首先需要导入一些基础的函数库包括：numpy （Python进行科学计算的基础软件包），pandas（pandas是一种快速，强大，灵活且易于使用的开源数据分析和处理工具），matplotlib和seaborn绘图。</p>
+<h4 id="Step1：-库函数的导入"><a href="#Step1：-库函数的导入" class="headerlink" title="Step1： 库函数的导入"></a>Step1： 库函数的导入</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">##  基础函数库</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment">## 绘图函数库</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br></pre></td></tr></table></figure>
+<p>本次我们选择鸢花数据（iris）进行方法的尝试训练，该数据集一共包含5个变量，其中4个特征变量，1个目标分类变量。共有150个样本，目标变量为 花的类别 其都属于鸢尾属下的三个亚属，分别是山鸢尾 (Iris-setosa)，变色鸢尾(Iris-versicolor)和维吉尼亚鸢尾(Iris-virginica)。包含的三种鸢尾花的四个特征，分别是花萼长度(cm)、花萼宽度(cm)、花瓣长度(cm)、花瓣宽度(cm)，这些形态特征在过去被用来识别物种。</p>
+<p><img src="https://img-blog.csdnimg.cn/54eb2544da1d416f83126613d8c2d6a2.png" alt="在这里插入图片描述"></p>
+<h4 id="Step2：数据读取-x2F-载入"><a href="#Step2：数据读取-x2F-载入" class="headerlink" title="Step2：数据读取&#x2F;载入"></a>Step2：数据读取&#x2F;载入</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 我们利用 sklearn 中自带的 iris 数据作为数据载入，并利用Pandas转化为DataFrame格式</span></span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line">data = load_iris() <span class="comment">#得到数据特征</span></span><br><span class="line">iris_target = data.target <span class="comment">#得到数据对应的标签</span></span><br><span class="line">iris_features = pd.DataFrame(data=data.data, columns=data.feature_names) <span class="comment">#利用Pandas转化为DataFrame格式</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="Step3：数据信息简单查看"><a href="#Step3：数据信息简单查看" class="headerlink" title="Step3：数据信息简单查看"></a>Step3：数据信息简单查看</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 利用.info()查看数据的整体信息</span></span><br><span class="line">iris_features.info()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/673b249096ba4a1198d3f0805debe709.png" alt="在这里插入图片描述"></p>
+<h2 id="进行简单的数据查看，我们可以利用-head-头部-tail-尾部"><a href="#进行简单的数据查看，我们可以利用-head-头部-tail-尾部" class="headerlink" title="进行简单的数据查看，我们可以利用 .head() 头部.tail()尾部"></a>进行简单的数据查看，我们可以利用 .head() 头部.tail()尾部</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 进行简单的数据查看，我们可以利用 .head() 头部.tail()尾部</span></span><br><span class="line">iris_features.head()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/3ec34193f3be493797f37b10417c725f.png" alt="在这里插入图片描述"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## 其对应的类别标签为，其中0，1，2分别代表&#x27;setosa&#x27;, &#x27;versicolor&#x27;, &#x27;virginica&#x27;三种不同花的类别。</span></span><br><span class="line">iris_target</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/43ff631d129745dd989a4f5c4b051d25.png" alt="在这里插入图片描述"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## 利用value_counts函数查看每个类别数量</span></span><br><span class="line">pd.Series(iris_target).value_counts()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/2ae520db955a40c3b86f805b4059f0f3.png" alt="在这里插入图片描述"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 对于特征进行一些统计描述</span></span><br><span class="line">iris_features.describe()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/22bc9653264a4c50870d9b2adf617d6f.png" alt="在这里插入图片描述"></p>
+<h4 id="Step4-可视化描述"><a href="#Step4-可视化描述" class="headerlink" title="Step4:可视化描述"></a>Step4:可视化描述</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 合并标签和特征信息</span></span><br><span class="line">iris_all = iris_features.copy() <span class="comment">##进行浅拷贝，防止对于原始数据的修改</span></span><br><span class="line">iris_all[<span class="string">&#x27;target&#x27;</span>] = iris_target</span><br><span class="line"><span class="comment">## 特征与标签组合的散点可视化</span></span><br><span class="line">sns.pairplot(data=iris_all,diag_kind=<span class="string">&#x27;hist&#x27;</span>, hue= <span class="string">&#x27;target&#x27;</span>)<span class="comment">#这个用来展现变量两两之间的关系，线性、非线性、相关等等</span></span><br><span class="line"><span class="comment">#diag_kind用来控制对角线上的图的类型，hue是针对某一字段进行分类</span></span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/bb758f14bbae4b828ecdeeb02f5b0b87.png" alt="在这里插入图片描述"><br>从上图可以发现，在2D情况下不同的特征组合对于不同类别的花的散点分布，以及大概的区分能力。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> iris_features.columns:</span><br><span class="line">    sns.boxplot(x=<span class="string">&#x27;target&#x27;</span>, y=col, saturation=<span class="number">0.5</span>,palette=<span class="string">&#x27;pastel&#x27;</span>, data=iris_all)</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/ba21c62b839444aab6ef0f81df5908d3.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/c741372f3ac24e3a8b77a94906419ac3.png" alt="在这里插入图片描述"><br>利用箱型图我们也可以得到不同类别在不同特征上的分布差异情况。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 选取其前三个特征绘制三维散点图</span></span><br><span class="line"><span class="keyword">from</span> mpl_toolkits.mplot3d <span class="keyword">import</span> Axes3D</span><br><span class="line"></span><br><span class="line">fig = plt.figure(figsize=(<span class="number">10</span>,<span class="number">8</span>))</span><br><span class="line">ax = fig.add_subplot(<span class="number">111</span>, projection=<span class="string">&#x27;3d&#x27;</span>)</span><br><span class="line"></span><br><span class="line">iris_all_class0 = iris_all[iris_all[<span class="string">&#x27;target&#x27;</span>]==<span class="number">0</span>].values</span><br><span class="line">iris_all_class1 = iris_all[iris_all[<span class="string">&#x27;target&#x27;</span>]==<span class="number">1</span>].values</span><br><span class="line">iris_all_class2 = iris_all[iris_all[<span class="string">&#x27;target&#x27;</span>]==<span class="number">2</span>].values</span><br><span class="line"><span class="comment"># &#x27;setosa&#x27;(0), &#x27;versicolor&#x27;(1), &#x27;virginica&#x27;(2)</span></span><br><span class="line">ax.scatter(iris_all_class0[:,<span class="number">0</span>], iris_all_class0[:,<span class="number">1</span>], iris_all_class0[:,<span class="number">2</span>],label=<span class="string">&#x27;setosa&#x27;</span>)</span><br><span class="line">ax.scatter(iris_all_class1[:,<span class="number">0</span>], iris_all_class1[:,<span class="number">1</span>], iris_all_class1[:,<span class="number">2</span>],label=<span class="string">&#x27;versicolor&#x27;</span>)</span><br><span class="line">ax.scatter(iris_all_class2[:,<span class="number">0</span>], iris_all_class2[:,<span class="number">1</span>], iris_all_class2[:,<span class="number">2</span>],label=<span class="string">&#x27;virginica&#x27;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/e72e862ce2c147c2bbf36a8306193670.png" alt="在这里插入图片描述"></p>
+<h4 id="Step5-利用-逻辑回归模型-在二分类上-进行训练和预测"><a href="#Step5-利用-逻辑回归模型-在二分类上-进行训练和预测" class="headerlink" title="Step5:利用 逻辑回归模型 在二分类上 进行训练和预测"></a>Step5:利用 逻辑回归模型 在二分类上 进行训练和预测</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## 为了正确评估模型性能，将数据划分为训练集和测试集，并在训练集上训练模型，在测试集上验证模型性能。</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"></span><br><span class="line"><span class="comment">## 选择其类别为0和1的样本 （不包括类别为2的样本）</span></span><br><span class="line">iris_features_part = iris_features.iloc[:<span class="number">100</span>]</span><br><span class="line">iris_target_part = iris_target[:<span class="number">100</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">## 测试集大小为20%， 80%/20%分</span></span><br><span class="line">x_train, x_test, y_train, y_test = train_test_split(iris_features_part, iris_target_part, test_size = <span class="number">0.2</span>, random_state = <span class="number">2020</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 从sklearn中导入逻辑回归模型</span></span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"></span><br><span class="line"><span class="comment">## 定义 逻辑回归模型 </span></span><br><span class="line">clf = LogisticRegression(random_state=<span class="number">0</span>, solver=<span class="string">&#x27;lbfgs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在训练集上训练逻辑回归模型</span></span><br><span class="line">clf.fit(x_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 查看其对应的w,因为是4个特征值，所以有4个数字</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;the weight of Logistic Regression:&#x27;</span>,clf.coef_)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 查看其对应的w0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;the intercept(w0) of Logistic Regression:&#x27;</span>,clf.intercept_)</span><br></pre></td></tr></table></figure>
+<p>the weight of Logistic Regression: [[ 0.45181973 -0.81743611  2.14470304  0.89838607]]</p>
+<p>the intercept(w0) of Logistic Regression: [-6.53367714]</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## 在训练集和测试集上分布利用训练好的模型进行预测</span></span><br><span class="line">train_predict = clf.predict(x_train)</span><br><span class="line">test_predict = clf.predict(x_test)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> metrics</span><br><span class="line"></span><br><span class="line"><span class="comment">## 利用accuracy（准确度）【预测正确的样本数目占总预测样本数目的比例】评估模型效果</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;The accuracy of the Logistic Regression is:&#x27;</span>,metrics.accuracy_score(y_train,train_predict))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;The accuracy of the Logistic Regression is:&#x27;</span>,metrics.accuracy_score(y_test,test_predict))</span><br><span class="line"></span><br><span class="line"><span class="comment">## 查看混淆矩阵 (预测值和真实值的各类情况统计矩阵)</span></span><br><span class="line">confusion_matrix_result = metrics.confusion_matrix(test_predict,y_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;The confusion matrix result:\n&#x27;</span>,confusion_matrix_result)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 利用热力图对于结果进行可视化</span></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">6</span>))</span><br><span class="line">sns.heatmap(confusion_matrix_result, annot=<span class="literal">True</span>, cmap=<span class="string">&#x27;Blues&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Predicted labels&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;True labels&#x27;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>The accuracy of the Logistic Regression is: 1.0</p>
+<p>The accuracy of the Logistic Regression is: 1.0</p>
+<p>The confusion matrix result:</p>
+<p> [[ 9  0]</p>
+<p> [ 0 11]]<br><img src="https://img-blog.csdnimg.cn/26aa6c3ea7044332aeee8f3e93edc9d1.png" alt="在这里插入图片描述"><br>我们可以发现其准确度为1，代表所有的样本都预测正确了。</p>
+<h4 id="Step6-利用-逻辑回归模型-在三分类-多分类-上-进行训练和预测"><a href="#Step6-利用-逻辑回归模型-在三分类-多分类-上-进行训练和预测" class="headerlink" title="Step6:利用 逻辑回归模型 在三分类(多分类)上 进行训练和预测"></a>Step6:利用 逻辑回归模型 在三分类(多分类)上 进行训练和预测</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## 测试集大小为20%， 80%/20%分</span></span><br><span class="line">x_train, x_test, y_train, y_test = train_test_split(iris_features, iris_target, test_size = <span class="number">0.2</span>, random_state = <span class="number">2020</span>)</span><br><span class="line"><span class="comment">## 定义 逻辑回归模型 </span></span><br><span class="line">clf = LogisticRegression(random_state=<span class="number">0</span>, solver=<span class="string">&#x27;lbfgs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在训练集上训练逻辑回归模型</span></span><br><span class="line">clf.fit(x_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 查看其对应的w</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;the weight of Logistic Regression:\n&#x27;</span>,clf.coef_)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 查看其对应的w0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;the intercept(w0) of Logistic Regression:\n&#x27;</span>,clf.intercept_)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 由于这个是3分类，所有我们这里得到了三个逻辑回归模型的参数，其三个逻辑回归组合起来即可实现三分类。</span></span><br></pre></td></tr></table></figure>
+<p>the weight of Logistic Regression:</p>
+<p> [[-0.45928925  0.83069886 -2.26606531 -0.9974398 ]</p>
+<p> [ 0.33117319 -0.72863423 -0.06841147 -0.9871103 ]</p>
+<p> [ 0.12811606 -0.10206463  2.33447679  1.9845501 ]]</p>
+<p>the intercept(w0) of Logistic Regression:</p>
+<p> [  9.43880677   3.93047364 -13.36928041]</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 在训练集和测试集上分布利用训练好的模型进行预测</span></span><br><span class="line">train_predict = clf.predict(x_train)</span><br><span class="line">test_predict = clf.predict(x_test)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 由于逻辑回归模型是概率预测模型（前文介绍的 p = p(y=1|x,\theta)）,所有我们可以利用 predict_proba 函数预测其概率</span></span><br><span class="line">train_predict_proba = clf.predict_proba(x_train)</span><br><span class="line">test_predict_proba = clf.predict_proba(x_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;The test predict Probability of each class:\n&#x27;</span>,test_predict_proba)</span><br><span class="line"><span class="comment">## 其中第一列代表预测为0类的概率，第二列代表预测为1类的概率，第三列代表预测为2类的概率。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 利用accuracy（准确度）【预测正确的样本数目占总预测样本数目的比例】评估模型效果</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;The accuracy of the Logistic Regression is:&#x27;</span>,metrics.accuracy_score(y_train,train_predict))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;The accuracy of the Logistic Regression is:&#x27;</span>,metrics.accuracy_score(y_test,test_predict))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>The test predict Probability of each class:</p>
+<p> [[1.03461734e-05 2.33279475e-02 9.76661706e-01]</p>
+<p> [9.69926591e-01 3.00732875e-02 1.21676996e-07]</p>
+<p> [2.09992547e-02 8.69156617e-01 1.09844128e-01]</p>
+<p> [3.61934870e-03 7.91979966e-01 2.04400685e-01]</p>
+<p> [7.90943202e-03 8.00605300e-01 1.91485268e-01]</p>
+<p> [7.30034960e-04 6.60508053e-01 3.38761912e-01]</p>
+<p> [1.68614209e-04 1.86322045e-01 8.13509341e-01]</p>
+<p> [1.06915332e-01 8.90815532e-01 2.26913667e-03]</p>
+<p> [9.46928070e-01 5.30707294e-02 1.20016057e-06]</p>
+<p> [9.62346385e-01 3.76532233e-02 3.91897289e-07]</p>
+<p> [1.19533384e-04 1.38823468e-01 8.61056998e-01]</p>
+<p> [8.78881883e-03 6.97207361e-01 2.94003820e-01]</p>
+<p> [9.73938143e-01 2.60617346e-02 1.22613836e-07]</p>
+<p> [1.78434056e-03 4.79518177e-01 5.18697482e-01]</p>
+<p> [5.56924342e-04 2.46776841e-01 7.52666235e-01]</p>
+<p> [9.83549842e-01 1.64500670e-02 9.13617258e-08]</p>
+<p> [1.65201477e-02 9.54672749e-01 2.88071038e-02]</p>
+<p> [8.99853708e-03 7.82707576e-01 2.08293887e-01]</p>
+<p> [2.98015025e-05 5.45900066e-02 9.45380192e-01]</p>
+<p> [9.35695863e-01 6.43039513e-02 1.85301359e-07]</p>
+<p> [9.80621190e-01 1.93787400e-02 7.00125246e-08]</p>
+<p> [1.68478815e-04 3.30167226e-01 6.69664295e-01]</p>
+<p> [3.54046163e-03 4.02267805e-01 5.94191734e-01]</p>
+<p> [9.70617284e-01 2.93824740e-02 2.42443967e-07]</p>
+<p> [2.56895205e-04 1.54631583e-01 8.45111522e-01]</p>
+<p> [3.48668490e-02 9.11966141e-01 5.31670105e-02]</p>
+<p> [1.47218847e-02 6.84038115e-01 3.01240001e-01]</p>
+<p> [9.46510447e-04 4.28641987e-01 5.70411503e-01]</p>
+<p> [9.64848137e-01 3.51516748e-02 1.87917880e-07]</p>
+<p> [9.70436779e-01 2.95624025e-02 8.18591606e-07]]</p>
+<p>The accuracy of the Logistic Regression is: 0.9833333333333333</p>
+<p>The accuracy of the Logistic Regression is: 0.8666666666666667</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## 查看混淆矩阵</span></span><br><span class="line">confusion_matrix_result = metrics.confusion_matrix(test_predict,y_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;The confusion matrix result:\n&#x27;</span>,confusion_matrix_result)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 利用热力图对于结果进行可视化</span></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">6</span>))</span><br><span class="line">sns.heatmap(confusion_matrix_result, annot=<span class="literal">True</span>, cmap=<span class="string">&#x27;Blues&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Predicted labels&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;True labels&#x27;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/e0181930932c4ee3b6657bfd4ba710ef.png" alt="在这里插入图片描述"><br>通过结果我们可以发现，其在三分类的结果的预测准确度上有所下降，其在测试集上的准确度为:<br>86.67<br>%<br> ，这是由于’versicolor’（1）和 ‘virginica’（2）这两个类别的特征，我们从可视化的时候也可以发现，其特征的边界具有一定的模糊性（边界类别混杂，没有明显区分边界），所有在这两类的预测上出现了一定的错误。</p>
+<h2 id="5-重要知识点"><a href="#5-重要知识点" class="headerlink" title="5  重要知识点"></a>5  重要知识点</h2><p><img src="https://img-blog.csdnimg.cn/f34a7ea856ca47d997b0915c8f2fab45.png" alt="在这里插入图片描述"><br>其对应的函数图像可以表示如下:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">x = np.arange(-<span class="number">5</span>,<span class="number">5</span>,<span class="number">0.01</span>)</span><br><span class="line">y = <span class="number">1</span>/(<span class="number">1</span>+np.exp(-x))</span><br><span class="line"></span><br><span class="line">plt.plot(x,y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;z&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.grid()</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/fd9dea74c8104f0588ed492bebd1e9f1.png" alt="在这里插入图片描述"></p>
+]]></content>
+      <categories>
+        <category>机器学习 逻辑回归</category>
+      </categories>
+      <tags>
+        <tag>机器学习 逻辑回归</tag>
       </tags>
   </entry>
   <entry>

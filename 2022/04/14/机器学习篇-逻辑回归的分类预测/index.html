@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-material.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="机器学习的逻辑回归">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习篇-逻辑回归的分类预测">
+<meta property="og:url" content="http://example.com/2022/04/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AF%87-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E5%88%86%E7%B1%BB%E9%A2%84%E6%B5%8B/index.html">
+<meta property="og:site_name" content="DZH&#39;s Blog">
+<meta property="og:description" content="机器学习的逻辑回归">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/54eb2544da1d416f83126613d8c2d6a2.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/673b249096ba4a1198d3f0805debe709.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3ec34193f3be493797f37b10417c725f.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/43ff631d129745dd989a4f5c4b051d25.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2ae520db955a40c3b86f805b4059f0f3.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/22bc9653264a4c50870d9b2adf617d6f.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/bb758f14bbae4b828ecdeeb02f5b0b87.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ba21c62b839444aab6ef0f81df5908d3.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/c741372f3ac24e3a8b77a94906419ac3.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e72e862ce2c147c2bbf36a8306193670.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/26aa6c3ea7044332aeee8f3e93edc9d1.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e0181930932c4ee3b6657bfd4ba710ef.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f34a7ea856ca47d997b0915c8f2fab45.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/fd9dea74c8104f0588ed492bebd1e9f1.png">
+<meta property="article:published_time" content="2022-04-14T03:06:32.000Z">
+<meta property="article:modified_time" content="2022-04-14T03:50:01.213Z">
+<meta property="article:author" content="DZH">
+<meta property="article:tag" content="机器学习 逻辑回归">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/54eb2544da1d416f83126613d8c2d6a2.png">
+
+<link rel="canonical" href="http://example.com/2022/04/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AF%87-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E5%88%86%E7%B1%BB%E9%A2%84%E6%B5%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>机器学习篇-逻辑回归的分类预测 | DZH's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">DZH's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>排行榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AF%87-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E5%88%86%E7%B1%BB%E9%A2%84%E6%B5%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="DZH">
+      <meta itemprop="description" content="希望能和大家一起共同进步">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DZH's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          机器学习篇-逻辑回归的分类预测
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-14 11:06:32" itemprop="dateCreated datePublished" datetime="2022-04-14T11:06:32+08:00">2022-04-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/" itemprop="url" rel="index"><span itemprop="name">机器学习 逻辑回归</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/04/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AF%87-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E5%88%86%E7%B1%BB%E9%A2%84%E6%B5%8B/" class="post-meta-item leancloud_visitors" data-flag-title="机器学习篇-逻辑回归的分类预测" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/04/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AF%87-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E5%88%86%E7%B1%BB%E9%A2%84%E6%B5%8B/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/04/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AF%87-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E5%88%86%E7%B1%BB%E9%A2%84%E6%B5%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>29k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>26 分钟</span>
+            </span>
+            <div class="post-description">机器学习的逻辑回归</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="机器学习篇-逻辑回归的分类预测"><a href="#机器学习篇-逻辑回归的分类预测" class="headerlink" title="机器学习篇-逻辑回归的分类预测"></a>机器学习篇-逻辑回归的分类预测</h1><h2 id="1-逻辑回归的介绍和应用"><a href="#1-逻辑回归的介绍和应用" class="headerlink" title="1 逻辑回归的介绍和应用"></a>1 逻辑回归的介绍和应用</h2><h3 id="1-1-逻辑回归的介绍"><a href="#1-1-逻辑回归的介绍" class="headerlink" title="1.1 逻辑回归的介绍"></a>1.1 逻辑回归的介绍</h3><p>逻辑回归（Logistic regression，简称LR）虽然其中带有”回归”两个字，但逻辑回归其实是一个分类模型，并且广泛应用于各个领域之中。虽然现在深度学习相对于这些传统方法更为火热，但实则这些传统方法由于其独特的优势依然广泛应用于各个领域中。</p>
+<p>而对于逻辑回归而且，最为突出的两点就是其模型简单和模型的可解释性强。</p>
+<p>逻辑回归模型的优劣势:</p>
+<p>优点：实现简单，易于理解和实现；计算代价不高，速度很快，存储资源低；<br>缺点：容易欠拟合，分类精度可能不高</p>
+<h3 id="1-2-逻辑回归的应用"><a href="#1-2-逻辑回归的应用" class="headerlink" title="1.2 逻辑回归的应用"></a>1.2 逻辑回归的应用</h3><p>逻辑回归模型广泛用于各个领域，包括机器学习，大多数医学领域和社会科学。例如，最初由Boyd 等人开发的创伤和损伤严重度评分（TRISS）被广泛用于预测受伤患者的死亡率，使用逻辑回归 基于观察到的患者特征（年龄，性别，体重指数,各种血液检查的结果等）分析预测发生特定疾病（例如糖尿病，冠心病）的风险。逻辑回归模型也用于预测在给定的过程中，系统或产品的故障的可能性。还用于市场营销应用程序，例如预测客户购买产品或中止订购的倾向等。在经济学中它可以用来预测一个人选择进入劳动力市场的可能性，而商业应用则可以用来预测房主拖欠抵押贷款的可能性。条件随机字段是逻辑回归到顺序数据的扩展，用于自然语言处理。</p>
+<p>逻辑回归模型现在同样是很多分类算法的基础组件,比如 分类任务中基于GBDT算法+LR逻辑回归实现的信用卡交易反欺诈，CTR(点击通过率)预估等，其好处在于输出值自然地落在0到1之间，并且有概率意义。模型清晰，有对应的概率学理论基础。它拟合出来的参数就代表了每一个特征(feature)对结果的影响。也是一个理解数据的好工具。但同时由于其本质上是一个线性的分类器，所以不能应对较为复杂的数据情况。很多时候我们也会拿逻辑回归模型去做一些任务尝试的基线（基础水平）。</p>
+<p>说了这些逻辑回归的概念和应用，大家应该已经对其有所期待了吧，那么我们现在开始吧！！！</p>
+<h2 id="2-学习目标"><a href="#2-学习目标" class="headerlink" title="2 学习目标"></a>2 学习目标</h2><p>了解 逻辑回归 的理论<br>掌握 逻辑回归 的 sklearn 函数调用使用并将其运用到鸢尾花数据集预测</p>
+<h2 id="3-代码流程"><a href="#3-代码流程" class="headerlink" title="3 代码流程"></a>3 代码流程</h2><p>基于鸢尾花（iris）数据集的逻辑回归分类实践<br>Step1:库函数导入<br>Step2:数据读取&#x2F;载入<br>Step3:数据信息简单查看<br>Step4:可视化描述<br>Step5:利用 逻辑回归模型 在二分类上 进行训练和预测<br>Step5:利用 逻辑回归模型 在三分类(多分类)上 进行训练和预测</p>
+<h2 id="4-基于鸢尾花（iris）数据集的逻辑回归分类实践"><a href="#4-基于鸢尾花（iris）数据集的逻辑回归分类实践" class="headerlink" title="4 基于鸢尾花（iris）数据集的逻辑回归分类实践"></a>4 基于鸢尾花（iris）数据集的逻辑回归分类实践</h2><p>在实践的最开始，我们首先需要导入一些基础的函数库包括：numpy （Python进行科学计算的基础软件包），pandas（pandas是一种快速，强大，灵活且易于使用的开源数据分析和处理工具），matplotlib和seaborn绘图。</p>
+<h4 id="Step1：-库函数的导入"><a href="#Step1：-库函数的导入" class="headerlink" title="Step1： 库函数的导入"></a>Step1： 库函数的导入</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##  基础函数库</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment">## 绘图函数库</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br></pre></td></tr></table></figure>
+<p>本次我们选择鸢花数据（iris）进行方法的尝试训练，该数据集一共包含5个变量，其中4个特征变量，1个目标分类变量。共有150个样本，目标变量为 花的类别 其都属于鸢尾属下的三个亚属，分别是山鸢尾 (Iris-setosa)，变色鸢尾(Iris-versicolor)和维吉尼亚鸢尾(Iris-virginica)。包含的三种鸢尾花的四个特征，分别是花萼长度(cm)、花萼宽度(cm)、花瓣长度(cm)、花瓣宽度(cm)，这些形态特征在过去被用来识别物种。</p>
+<p><img src="https://img-blog.csdnimg.cn/54eb2544da1d416f83126613d8c2d6a2.png" alt="在这里插入图片描述"></p>
+<h4 id="Step2：数据读取-x2F-载入"><a href="#Step2：数据读取-x2F-载入" class="headerlink" title="Step2：数据读取&#x2F;载入"></a>Step2：数据读取&#x2F;载入</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 我们利用 sklearn 中自带的 iris 数据作为数据载入，并利用Pandas转化为DataFrame格式</span></span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line">data = load_iris() <span class="comment">#得到数据特征</span></span><br><span class="line">iris_target = data.target <span class="comment">#得到数据对应的标签</span></span><br><span class="line">iris_features = pd.DataFrame(data=data.data, columns=data.feature_names) <span class="comment">#利用Pandas转化为DataFrame格式</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="Step3：数据信息简单查看"><a href="#Step3：数据信息简单查看" class="headerlink" title="Step3：数据信息简单查看"></a>Step3：数据信息简单查看</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 利用.info()查看数据的整体信息</span></span><br><span class="line">iris_features.info()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/673b249096ba4a1198d3f0805debe709.png" alt="在这里插入图片描述"></p>
+<h2 id="进行简单的数据查看，我们可以利用-head-头部-tail-尾部"><a href="#进行简单的数据查看，我们可以利用-head-头部-tail-尾部" class="headerlink" title="进行简单的数据查看，我们可以利用 .head() 头部.tail()尾部"></a>进行简单的数据查看，我们可以利用 .head() 头部.tail()尾部</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 进行简单的数据查看，我们可以利用 .head() 头部.tail()尾部</span></span><br><span class="line">iris_features.head()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/3ec34193f3be493797f37b10417c725f.png" alt="在这里插入图片描述"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## 其对应的类别标签为，其中0，1，2分别代表&#x27;setosa&#x27;, &#x27;versicolor&#x27;, &#x27;virginica&#x27;三种不同花的类别。</span></span><br><span class="line">iris_target</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/43ff631d129745dd989a4f5c4b051d25.png" alt="在这里插入图片描述"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## 利用value_counts函数查看每个类别数量</span></span><br><span class="line">pd.Series(iris_target).value_counts()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/2ae520db955a40c3b86f805b4059f0f3.png" alt="在这里插入图片描述"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 对于特征进行一些统计描述</span></span><br><span class="line">iris_features.describe()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/22bc9653264a4c50870d9b2adf617d6f.png" alt="在这里插入图片描述"></p>
+<h4 id="Step4-可视化描述"><a href="#Step4-可视化描述" class="headerlink" title="Step4:可视化描述"></a>Step4:可视化描述</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 合并标签和特征信息</span></span><br><span class="line">iris_all = iris_features.copy() <span class="comment">##进行浅拷贝，防止对于原始数据的修改</span></span><br><span class="line">iris_all[<span class="string">&#x27;target&#x27;</span>] = iris_target</span><br><span class="line"><span class="comment">## 特征与标签组合的散点可视化</span></span><br><span class="line">sns.pairplot(data=iris_all,diag_kind=<span class="string">&#x27;hist&#x27;</span>, hue= <span class="string">&#x27;target&#x27;</span>)<span class="comment">#这个用来展现变量两两之间的关系，线性、非线性、相关等等</span></span><br><span class="line"><span class="comment">#diag_kind用来控制对角线上的图的类型，hue是针对某一字段进行分类</span></span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/bb758f14bbae4b828ecdeeb02f5b0b87.png" alt="在这里插入图片描述"><br>从上图可以发现，在2D情况下不同的特征组合对于不同类别的花的散点分布，以及大概的区分能力。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> iris_features.columns:</span><br><span class="line">    sns.boxplot(x=<span class="string">&#x27;target&#x27;</span>, y=col, saturation=<span class="number">0.5</span>,palette=<span class="string">&#x27;pastel&#x27;</span>, data=iris_all)</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/ba21c62b839444aab6ef0f81df5908d3.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/c741372f3ac24e3a8b77a94906419ac3.png" alt="在这里插入图片描述"><br>利用箱型图我们也可以得到不同类别在不同特征上的分布差异情况。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 选取其前三个特征绘制三维散点图</span></span><br><span class="line"><span class="keyword">from</span> mpl_toolkits.mplot3d <span class="keyword">import</span> Axes3D</span><br><span class="line"></span><br><span class="line">fig = plt.figure(figsize=(<span class="number">10</span>,<span class="number">8</span>))</span><br><span class="line">ax = fig.add_subplot(<span class="number">111</span>, projection=<span class="string">&#x27;3d&#x27;</span>)</span><br><span class="line"></span><br><span class="line">iris_all_class0 = iris_all[iris_all[<span class="string">&#x27;target&#x27;</span>]==<span class="number">0</span>].values</span><br><span class="line">iris_all_class1 = iris_all[iris_all[<span class="string">&#x27;target&#x27;</span>]==<span class="number">1</span>].values</span><br><span class="line">iris_all_class2 = iris_all[iris_all[<span class="string">&#x27;target&#x27;</span>]==<span class="number">2</span>].values</span><br><span class="line"><span class="comment"># &#x27;setosa&#x27;(0), &#x27;versicolor&#x27;(1), &#x27;virginica&#x27;(2)</span></span><br><span class="line">ax.scatter(iris_all_class0[:,<span class="number">0</span>], iris_all_class0[:,<span class="number">1</span>], iris_all_class0[:,<span class="number">2</span>],label=<span class="string">&#x27;setosa&#x27;</span>)</span><br><span class="line">ax.scatter(iris_all_class1[:,<span class="number">0</span>], iris_all_class1[:,<span class="number">1</span>], iris_all_class1[:,<span class="number">2</span>],label=<span class="string">&#x27;versicolor&#x27;</span>)</span><br><span class="line">ax.scatter(iris_all_class2[:,<span class="number">0</span>], iris_all_class2[:,<span class="number">1</span>], iris_all_class2[:,<span class="number">2</span>],label=<span class="string">&#x27;virginica&#x27;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/e72e862ce2c147c2bbf36a8306193670.png" alt="在这里插入图片描述"></p>
+<h4 id="Step5-利用-逻辑回归模型-在二分类上-进行训练和预测"><a href="#Step5-利用-逻辑回归模型-在二分类上-进行训练和预测" class="headerlink" title="Step5:利用 逻辑回归模型 在二分类上 进行训练和预测"></a>Step5:利用 逻辑回归模型 在二分类上 进行训练和预测</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## 为了正确评估模型性能，将数据划分为训练集和测试集，并在训练集上训练模型，在测试集上验证模型性能。</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"></span><br><span class="line"><span class="comment">## 选择其类别为0和1的样本 （不包括类别为2的样本）</span></span><br><span class="line">iris_features_part = iris_features.iloc[:<span class="number">100</span>]</span><br><span class="line">iris_target_part = iris_target[:<span class="number">100</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">## 测试集大小为20%， 80%/20%分</span></span><br><span class="line">x_train, x_test, y_train, y_test = train_test_split(iris_features_part, iris_target_part, test_size = <span class="number">0.2</span>, random_state = <span class="number">2020</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 从sklearn中导入逻辑回归模型</span></span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"></span><br><span class="line"><span class="comment">## 定义 逻辑回归模型 </span></span><br><span class="line">clf = LogisticRegression(random_state=<span class="number">0</span>, solver=<span class="string">&#x27;lbfgs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在训练集上训练逻辑回归模型</span></span><br><span class="line">clf.fit(x_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 查看其对应的w,因为是4个特征值，所以有4个数字</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;the weight of Logistic Regression:&#x27;</span>,clf.coef_)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 查看其对应的w0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;the intercept(w0) of Logistic Regression:&#x27;</span>,clf.intercept_)</span><br></pre></td></tr></table></figure>
+<p>the weight of Logistic Regression: [[ 0.45181973 -0.81743611  2.14470304  0.89838607]]</p>
+<p>the intercept(w0) of Logistic Regression: [-6.53367714]</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## 在训练集和测试集上分布利用训练好的模型进行预测</span></span><br><span class="line">train_predict = clf.predict(x_train)</span><br><span class="line">test_predict = clf.predict(x_test)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> metrics</span><br><span class="line"></span><br><span class="line"><span class="comment">## 利用accuracy（准确度）【预测正确的样本数目占总预测样本数目的比例】评估模型效果</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;The accuracy of the Logistic Regression is:&#x27;</span>,metrics.accuracy_score(y_train,train_predict))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;The accuracy of the Logistic Regression is:&#x27;</span>,metrics.accuracy_score(y_test,test_predict))</span><br><span class="line"></span><br><span class="line"><span class="comment">## 查看混淆矩阵 (预测值和真实值的各类情况统计矩阵)</span></span><br><span class="line">confusion_matrix_result = metrics.confusion_matrix(test_predict,y_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;The confusion matrix result:\n&#x27;</span>,confusion_matrix_result)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 利用热力图对于结果进行可视化</span></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">6</span>))</span><br><span class="line">sns.heatmap(confusion_matrix_result, annot=<span class="literal">True</span>, cmap=<span class="string">&#x27;Blues&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Predicted labels&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;True labels&#x27;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>The accuracy of the Logistic Regression is: 1.0</p>
+<p>The accuracy of the Logistic Regression is: 1.0</p>
+<p>The confusion matrix result:</p>
+<p> [[ 9  0]</p>
+<p> [ 0 11]]<br><img src="https://img-blog.csdnimg.cn/26aa6c3ea7044332aeee8f3e93edc9d1.png" alt="在这里插入图片描述"><br>我们可以发现其准确度为1，代表所有的样本都预测正确了。</p>
+<h4 id="Step6-利用-逻辑回归模型-在三分类-多分类-上-进行训练和预测"><a href="#Step6-利用-逻辑回归模型-在三分类-多分类-上-进行训练和预测" class="headerlink" title="Step6:利用 逻辑回归模型 在三分类(多分类)上 进行训练和预测"></a>Step6:利用 逻辑回归模型 在三分类(多分类)上 进行训练和预测</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## 测试集大小为20%， 80%/20%分</span></span><br><span class="line">x_train, x_test, y_train, y_test = train_test_split(iris_features, iris_target, test_size = <span class="number">0.2</span>, random_state = <span class="number">2020</span>)</span><br><span class="line"><span class="comment">## 定义 逻辑回归模型 </span></span><br><span class="line">clf = LogisticRegression(random_state=<span class="number">0</span>, solver=<span class="string">&#x27;lbfgs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在训练集上训练逻辑回归模型</span></span><br><span class="line">clf.fit(x_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 查看其对应的w</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;the weight of Logistic Regression:\n&#x27;</span>,clf.coef_)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 查看其对应的w0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;the intercept(w0) of Logistic Regression:\n&#x27;</span>,clf.intercept_)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 由于这个是3分类，所有我们这里得到了三个逻辑回归模型的参数，其三个逻辑回归组合起来即可实现三分类。</span></span><br></pre></td></tr></table></figure>
+<p>the weight of Logistic Regression:</p>
+<p> [[-0.45928925  0.83069886 -2.26606531 -0.9974398 ]</p>
+<p> [ 0.33117319 -0.72863423 -0.06841147 -0.9871103 ]</p>
+<p> [ 0.12811606 -0.10206463  2.33447679  1.9845501 ]]</p>
+<p>the intercept(w0) of Logistic Regression:</p>
+<p> [  9.43880677   3.93047364 -13.36928041]</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 在训练集和测试集上分布利用训练好的模型进行预测</span></span><br><span class="line">train_predict = clf.predict(x_train)</span><br><span class="line">test_predict = clf.predict(x_test)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 由于逻辑回归模型是概率预测模型（前文介绍的 p = p(y=1|x,\theta)）,所有我们可以利用 predict_proba 函数预测其概率</span></span><br><span class="line">train_predict_proba = clf.predict_proba(x_train)</span><br><span class="line">test_predict_proba = clf.predict_proba(x_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;The test predict Probability of each class:\n&#x27;</span>,test_predict_proba)</span><br><span class="line"><span class="comment">## 其中第一列代表预测为0类的概率，第二列代表预测为1类的概率，第三列代表预测为2类的概率。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 利用accuracy（准确度）【预测正确的样本数目占总预测样本数目的比例】评估模型效果</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;The accuracy of the Logistic Regression is:&#x27;</span>,metrics.accuracy_score(y_train,train_predict))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;The accuracy of the Logistic Regression is:&#x27;</span>,metrics.accuracy_score(y_test,test_predict))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>The test predict Probability of each class:</p>
+<p> [[1.03461734e-05 2.33279475e-02 9.76661706e-01]</p>
+<p> [9.69926591e-01 3.00732875e-02 1.21676996e-07]</p>
+<p> [2.09992547e-02 8.69156617e-01 1.09844128e-01]</p>
+<p> [3.61934870e-03 7.91979966e-01 2.04400685e-01]</p>
+<p> [7.90943202e-03 8.00605300e-01 1.91485268e-01]</p>
+<p> [7.30034960e-04 6.60508053e-01 3.38761912e-01]</p>
+<p> [1.68614209e-04 1.86322045e-01 8.13509341e-01]</p>
+<p> [1.06915332e-01 8.90815532e-01 2.26913667e-03]</p>
+<p> [9.46928070e-01 5.30707294e-02 1.20016057e-06]</p>
+<p> [9.62346385e-01 3.76532233e-02 3.91897289e-07]</p>
+<p> [1.19533384e-04 1.38823468e-01 8.61056998e-01]</p>
+<p> [8.78881883e-03 6.97207361e-01 2.94003820e-01]</p>
+<p> [9.73938143e-01 2.60617346e-02 1.22613836e-07]</p>
+<p> [1.78434056e-03 4.79518177e-01 5.18697482e-01]</p>
+<p> [5.56924342e-04 2.46776841e-01 7.52666235e-01]</p>
+<p> [9.83549842e-01 1.64500670e-02 9.13617258e-08]</p>
+<p> [1.65201477e-02 9.54672749e-01 2.88071038e-02]</p>
+<p> [8.99853708e-03 7.82707576e-01 2.08293887e-01]</p>
+<p> [2.98015025e-05 5.45900066e-02 9.45380192e-01]</p>
+<p> [9.35695863e-01 6.43039513e-02 1.85301359e-07]</p>
+<p> [9.80621190e-01 1.93787400e-02 7.00125246e-08]</p>
+<p> [1.68478815e-04 3.30167226e-01 6.69664295e-01]</p>
+<p> [3.54046163e-03 4.02267805e-01 5.94191734e-01]</p>
+<p> [9.70617284e-01 2.93824740e-02 2.42443967e-07]</p>
+<p> [2.56895205e-04 1.54631583e-01 8.45111522e-01]</p>
+<p> [3.48668490e-02 9.11966141e-01 5.31670105e-02]</p>
+<p> [1.47218847e-02 6.84038115e-01 3.01240001e-01]</p>
+<p> [9.46510447e-04 4.28641987e-01 5.70411503e-01]</p>
+<p> [9.64848137e-01 3.51516748e-02 1.87917880e-07]</p>
+<p> [9.70436779e-01 2.95624025e-02 8.18591606e-07]]</p>
+<p>The accuracy of the Logistic Regression is: 0.9833333333333333</p>
+<p>The accuracy of the Logistic Regression is: 0.8666666666666667</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## 查看混淆矩阵</span></span><br><span class="line">confusion_matrix_result = metrics.confusion_matrix(test_predict,y_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;The confusion matrix result:\n&#x27;</span>,confusion_matrix_result)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 利用热力图对于结果进行可视化</span></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">6</span>))</span><br><span class="line">sns.heatmap(confusion_matrix_result, annot=<span class="literal">True</span>, cmap=<span class="string">&#x27;Blues&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Predicted labels&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;True labels&#x27;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/e0181930932c4ee3b6657bfd4ba710ef.png" alt="在这里插入图片描述"><br>通过结果我们可以发现，其在三分类的结果的预测准确度上有所下降，其在测试集上的准确度为:<br>86.67<br>%<br> ，这是由于’versicolor’（1）和 ‘virginica’（2）这两个类别的特征，我们从可视化的时候也可以发现，其特征的边界具有一定的模糊性（边界类别混杂，没有明显区分边界），所有在这两类的预测上出现了一定的错误。</p>
+<h2 id="5-重要知识点"><a href="#5-重要知识点" class="headerlink" title="5  重要知识点"></a>5  重要知识点</h2><p><img src="https://img-blog.csdnimg.cn/f34a7ea856ca47d997b0915c8f2fab45.png" alt="在这里插入图片描述"><br>其对应的函数图像可以表示如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">x = np.arange(-<span class="number">5</span>,<span class="number">5</span>,<span class="number">0.01</span>)</span><br><span class="line">y = <span class="number">1</span>/(<span class="number">1</span>+np.exp(-x))</span><br><span class="line"></span><br><span class="line">plt.plot(x,y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;z&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.grid()</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/fd9dea74c8104f0588ed492bebd1e9f1.png" alt="在这里插入图片描述"></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>DZH
+  </li>
+    <!-- 创建时间 -->
+  <li>
+    <strong>创建时间： </strong>
+    2022年04月14日 - 11时04分
+  </li>
+
+  <!-- 修改时间 -->
+  <li>
+    <strong>修改时间： </strong>
+    2022年04月14日 - 11时04分
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/04/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AF%87-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E5%88%86%E7%B1%BB%E9%A2%84%E6%B5%8B/" title="机器学习篇-逻辑回归的分类预测">http://example.com/2022/04/14/机器学习篇-逻辑回归的分类预测/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/" rel="tag"><i class="fa fa-tag"></i> 机器学习 逻辑回归</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/23/pytorch-9/" rel="prev" title="多分类问题">
+      <i class="fa fa-chevron-left"></i> 多分类问题
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+ 
+   <div>
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-paw"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+
+   </div>
+ 
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AF%87-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E5%88%86%E7%B1%BB%E9%A2%84%E6%B5%8B"><span class="nav-text">机器学习篇-逻辑回归的分类预测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E4%BB%8B%E7%BB%8D%E5%92%8C%E5%BA%94%E7%94%A8"><span class="nav-text">1 逻辑回归的介绍和应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="nav-text">1.1 逻辑回归的介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-text">1.2 逻辑回归的应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87"><span class="nav-text">2 学习目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BB%A3%E7%A0%81%E6%B5%81%E7%A8%8B"><span class="nav-text">3 代码流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%9F%BA%E4%BA%8E%E9%B8%A2%E5%B0%BE%E8%8A%B1%EF%BC%88iris%EF%BC%89%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E5%88%86%E7%B1%BB%E5%AE%9E%E8%B7%B5"><span class="nav-text">4 基于鸢尾花（iris）数据集的逻辑回归分类实践</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Step1%EF%BC%9A-%E5%BA%93%E5%87%BD%E6%95%B0%E7%9A%84%E5%AF%BC%E5%85%A5"><span class="nav-text">Step1： 库函数的导入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Step2%EF%BC%9A%E6%95%B0%E6%8D%AE%E8%AF%BB%E5%8F%96-x2F-%E8%BD%BD%E5%85%A5"><span class="nav-text">Step2：数据读取&#x2F;载入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Step3%EF%BC%9A%E6%95%B0%E6%8D%AE%E4%BF%A1%E6%81%AF%E7%AE%80%E5%8D%95%E6%9F%A5%E7%9C%8B"><span class="nav-text">Step3：数据信息简单查看</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E8%A1%8C%E7%AE%80%E5%8D%95%E7%9A%84%E6%95%B0%E6%8D%AE%E6%9F%A5%E7%9C%8B%EF%BC%8C%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%88%A9%E7%94%A8-head-%E5%A4%B4%E9%83%A8-tail-%E5%B0%BE%E9%83%A8"><span class="nav-text">进行简单的数据查看，我们可以利用 .head() 头部.tail()尾部</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Step4-%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8F%8F%E8%BF%B0"><span class="nav-text">Step4:可视化描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Step5-%E5%88%A9%E7%94%A8-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B-%E5%9C%A8%E4%BA%8C%E5%88%86%E7%B1%BB%E4%B8%8A-%E8%BF%9B%E8%A1%8C%E8%AE%AD%E7%BB%83%E5%92%8C%E9%A2%84%E6%B5%8B"><span class="nav-text">Step5:利用 逻辑回归模型 在二分类上 进行训练和预测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Step6-%E5%88%A9%E7%94%A8-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B-%E5%9C%A8%E4%B8%89%E5%88%86%E7%B1%BB-%E5%A4%9A%E5%88%86%E7%B1%BB-%E4%B8%8A-%E8%BF%9B%E8%A1%8C%E8%AE%AD%E7%BB%83%E5%92%8C%E9%A2%84%E6%B5%8B"><span class="nav-text">Step6:利用 逻辑回归模型 在三分类(多分类)上 进行训练和预测</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E9%87%8D%E8%A6%81%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-text">5  重要知识点</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">DZH</p>
+  <div class="site-description" itemprop="description">希望能和大家一起共同进步</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Dzihao1" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Dzihao1" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/529716378@qq.com" title="E-Mail → 529716378@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://djiah.github.io/" title="https:&#x2F;&#x2F;djiah.github.io&#x2F;" rel="noopener" target="_blank">DJH</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script
+  async
+  src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"
+></script>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-cat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DZH</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">38k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">35 分钟</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="我的第 undefined 位朋友，">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="历经 undefined 次回眸才与你相遇">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(202202013,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'f2GPb1HaxE7jjd6CdBLnK2zP-9Nh9j0Va',
+      appKey     : 'QDlxLFBLmnNDPiXVv05iyiqT',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
